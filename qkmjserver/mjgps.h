@@ -2,19 +2,19 @@
 #define __MJGPS_H__
 
 #define DEFAULT_GPS_PORT 7001
-#define DEFAULT_GPS_IP "162.105.31.222"
-#define MAX_PLAYER 40
+#define DEFAULT_GPS_IP "173.255.245.16"
+#define MAX_PLAYER 300
 #define ASK_MODE 1
 #define CMD_MODE 2
 
-#define RECORD_FILE "/home/tonyq/qkrecord/qkmj.rec"
-#define INDEX_FILE "/home/tonyq/qkrecord/qkmj.inx"
-#define NEWS_FILE "/home/tonyq/qkrecord/news.txt"
-#define BADUSER_FILE "/home/tonyq/qkrecord/baduser.txt"
-#define LOG_FILE "/home/tonyq/qkrecord/qkmj.log"
+#define RECORD_FILE "/var/qkrecord/qkmj.rec"
+#define INDEX_FILE "/var/qkrecord/qkmj.inx"
+#define NEWS_FILE "/var/qkrecord/news.txt"
+#define BADUSER_FILE "/var/qkrecord/baduser.txt"
+#define LOG_FILE "/var/qkrecord/qkmj.log"
 
 #define DEFAULT_RECORD_FILE "/home/tonyq/qkrecord/qkmj.rec"
-#define DEFAULT_MONEY 20000
+#define DEFAULT_MONEY 0
 
 
 struct player_record
