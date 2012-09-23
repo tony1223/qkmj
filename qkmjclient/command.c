@@ -265,30 +265,7 @@ char *msg;
           write_msg(gps_sockfd,"205");
           init_global_screen();
         }
-        init_serv_socket();
-        sprintf(msg_buf,"012%d",SERV_PORT - 1);
-        write_msg(gps_sockfd,msg_buf);
-        my_id=1;
-        in_serv=1;
-        on_seat=0;
-        player_in_table=1;
-        player[1].sit=1;
-        player[1].money=my_money;
-        player[1].id=my_gps_id;
-        strcpy(player[1].name,my_name);
-        my_sit=1;
-        for(i=0;i<=4;i++)
-          table[i]=0;
-        table[1]=1;
-        if(player_in_table==PLAYER_NUM)
-        {
-          init_playing_screen();
-          opening();
-          open_deal();
-        }
-        strcpy(player[1].name,my_name);
-        player[1].in_table=1;
-        send_gps_line("開桌");
+        write_msg(gps_sockfd,"014");//檢查開桌條件，將開桌的部份另外放到 message 去執行
         break;
       case QUIT:
       case S_QUIT:

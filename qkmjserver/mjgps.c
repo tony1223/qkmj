@@ -960,6 +960,12 @@ void gps_processing() {
 							full: ;
 							break;
 						case 12:
+							if (player[player_id].money <= MIN_JOIN_MONEY ){
+								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能開桌",
+										player[player_id].money , MIN_JOIN_MONEY);
+								write_msg(player[player_id].sockfd,msg_buf);
+								break;
+							}
 							player[player_id].port = atoi(buf + 3);
 							if (player[player_id].join) {
 								if (player[player[player_id].join].serv > 0)
@@ -977,6 +983,15 @@ void gps_processing() {
 							break;
 						case 13:
 							list_table(player[player_id].sockfd, 2);
+							break;
+						case 14://檢查開桌資格
+							if (player[player_id].money <= MIN_JOIN_MONEY ){
+								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能開桌",
+										player[player_id].money , MIN_JOIN_MONEY);
+								write_msg(player[player_id].sockfd,msg_buf);
+								break;
+							}
+							write_msg(player[player_id].sockfd,"012");//確認開桌
 							break;
 						case 20:
 							strcpy(msg_buf, buf + 3);
