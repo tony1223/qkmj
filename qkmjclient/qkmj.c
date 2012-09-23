@@ -719,7 +719,7 @@ gps()
     endwin();
     exit(0);
   }
-  send_gps_line("連線成功!");
+  send_gps_line("連線 ok ");
   sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s Beta",QKMJ_VERSION[0],QKMJ_VERSION+1);
   sprintf(msg_buf,"Ptt 小天使特別板 By TonyQ ");
   display_comment(msg_buf);

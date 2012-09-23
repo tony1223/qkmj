@@ -143,6 +143,7 @@ int msg_type;
             if(ans_buf[0]=='y' || ans_buf[0]=='Y')
             {
             	sprintf(msg_buf,"105");
+            	write_msg(gps_sockfd,msg_buf);
             }
             else
               leave();

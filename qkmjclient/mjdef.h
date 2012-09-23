@@ -1,7 +1,7 @@
 #define DEFAULT_SERV_PORT 5555
 //#define DEFAULT_GPS_IP "162.105.31.222" 
 //# #define DEFAULT_GPS_PORT 7001 
-#define DEFAULT_GPS_IP "127.0.0.1"
+#define DEFAULT_GPS_IP "173.255.245.16"
 #define DEFAULT_GPS_PORT 7000
 
 #define QKMJRC ".qkmjrc"

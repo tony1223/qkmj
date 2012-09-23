@@ -855,6 +855,7 @@ void gps_processing() {
 						case 105:
 							if (read_user_name(player[player_id].name) && player[player_id].login == 3) {
 								*(buf + 11) = 0;
+								print("Hello");
 								for (i = 1; i < MAX_PLAYER; i++) {
 									if ((player[i].login == 2 || player[i].login == 3) && (i != player_id) && strcmp(
 											player[i].name, player[player_id].name)
