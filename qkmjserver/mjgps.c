@@ -796,7 +796,6 @@ void gps_processing() {
 							} else {
 								write_msg(player[player_id].sockfd, "005");
 							}
-							multi_login: ;
 							break;
 						case 102:
 							/*
@@ -812,7 +811,7 @@ void gps_processing() {
 											write_msg(player[player_id].sockfd,
 													"006");
 											player[player_id].login = 3;
-											goto multi_login;
+											break;
 										}
 									}
 									time(&record.last_login_time);
@@ -833,7 +832,6 @@ void gps_processing() {
 									write_msg(player[player_id].sockfd, "004");
 								}
 							}
-							multi_login: ;
 							break;
 						case 103: /*
 						 * Create new account 
