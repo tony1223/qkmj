@@ -51,7 +51,6 @@ struct ask_mode_info ask;
 struct rlimit fd_limit;
 
 int err(char *errmsg) {
-	/*
 	 if ((log_fp = fopen (LOG_FILE, "a")) == NULL)
 	 {
 	 printf ("Cannot open logfile\n");
@@ -64,7 +63,6 @@ int err(char *errmsg) {
 
 	 log_level = 0;
 	 fclose (log_fp);
-	 */
 }
 
 int read_msg(int fd, char *msg) {
@@ -804,6 +802,7 @@ void gps_processing() {
 							if (read_user_name(player[player_id].name)) {
 								*(buf + 11) = 0;
 								if (checkpasswd(record.password, buf + 3)) {
+									int find_duplicated = 0;
 									for (i = 1; i < MAX_PLAYER; i++) {
 										if ((player[i].login == 2 || player[i].login == 3) && strcmp(
 												player[i].name,
@@ -811,9 +810,14 @@ void gps_processing() {
 											write_msg(player[player_id].sockfd,
 													"006");
 											player[player_id].login = 3;
+											find_duplicated = 1;
 											break;
 										}
 									}
+									if (find_duplicated){
+										break;
+									}
+									
 									time(&record.last_login_time);
 									record.last_login_from[0] = 0;
 									if (player[player_id].username[0] != 0) {
@@ -855,7 +859,6 @@ void gps_processing() {
 						case 105:
 							if (read_user_name(player[player_id].name) && player[player_id].login == 3) {
 								*(buf + 11) = 0;
-								printf("hited");
 								for (i = 1; i < MAX_PLAYER; i++) {
 									if ((player[i].login == 2 || player[i].login == 3) && (i != player_id) && strcmp(
 											player[i].name, player[player_id].name)

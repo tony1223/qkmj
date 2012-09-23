@@ -3,7 +3,7 @@
 
 #define DEFAULT_GPS_PORT 7001
 #define DEFAULT_GPS_IP "173.255.245.16"
-#define MAX_PLAYER 300
+#define MAX_PLAYER 500
 #define ASK_MODE 1
 #define CMD_MODE 2
 
@@ -13,7 +13,7 @@
 #define BADUSER_FILE "/var/qkrecord/baduser.txt"
 #define LOG_FILE "/var/qkrecord/qkmj.log"
 
-#define DEFAULT_RECORD_FILE "/home/tonyq/qkrecord/qkmj.rec"
+#define DEFAULT_RECORD_FILE "/var/qkrecord/qkmj.rec"
 #define DEFAULT_MONEY 0
 
 
