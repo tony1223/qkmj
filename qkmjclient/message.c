@@ -142,8 +142,10 @@ int msg_type;
             ask_question("重覆進入! 你要殺掉另一個帳號嗎? (y/N)：",ans_buf,1,1);
             if(ans_buf[0]=='y' || ans_buf[0]=='Y')
             {
-            	sprintf(msg_buf,"105");
-            	write_msg(gps_sockfd,msg_buf);
+            	//TODO remove this
+            	display_comment("送出 105 操作中...");
+            	write_msg(gps_sockfd,"105");
+            	
             }
             else
               leave();
