@@ -156,17 +156,18 @@ int msg_type;
             {
               case '0':
                 Tokenize(buf+4,1);
-                sprintf(msg_buf,"連往 %s port %s",cmd_argv[1],cmd_argv[2]);
-                send_gps_line(msg_buf);
+                //sprintf(msg_buf,"連往 %s port %s",cmd_argv[1],cmd_argv[2]);
+                //send_gps_line(msg_buf);
+                send_gps_line("與該桌連線中...");
                 init_socket(cmd_argv[1],atoi(cmd_argv[2]),&table_sockfd);
                 FD_SET(table_sockfd,&afds);
                 in_join=1;
                 break;
               case '1':
-                send_gps_line("沒有這個名字");
+                send_gps_line("查無此桌，請重新再試。（可用 /FREE 查詢空桌）");
                 break;
               case '2':
-                send_gps_line("連不上去");
+                send_gps_line("無法連線");
                 break;
             }
             break;

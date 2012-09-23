@@ -253,20 +253,20 @@ char *msg;
           break;
         }
         clear_variable();
-        if(in_join)
+        if(in_join) //TODO: 確認這裡應該是不會跑到的程式碼吧？
         {
           close_join();
           write_msg(gps_sockfd,"205");
           init_global_screen();
         }
-        if(in_serv)
+        if(in_serv) //TODO: 確認這裡應該是不會跑到的程式碼吧？
         {
           close_serv();
           write_msg(gps_sockfd,"205");
           init_global_screen();
         }
         init_serv_socket();
-        sprintf(msg_buf,"012%d",SERV_PORT-1);
+        sprintf(msg_buf,"012%d",SERV_PORT - 1);
         write_msg(gps_sockfd,msg_buf);
         my_id=1;
         in_serv=1;

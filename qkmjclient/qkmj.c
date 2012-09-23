@@ -710,7 +710,8 @@ gps()
 
   init_global_screen();
   input_mode=0;
-  sprintf(msg_buf,"連往 QKMJ Server %s %d",GPS_IP,GPS_PORT);
+  //sprintf(msg_buf,"連往 QKMJ Server %s %d",GPS_IP,GPS_PORT);
+  sprintf(msg_buf,"連往 QKMJ Server 中 ");
   display_comment(msg_buf);
   status=init_socket(GPS_IP,GPS_PORT,&gps_sockfd);
   if(status<0)
@@ -719,9 +720,10 @@ gps()
     endwin();
     exit(0);
   }
-  send_gps_line("連線 ok ");
-  sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s Beta",QKMJ_VERSION[0],QKMJ_VERSION+1);
-  sprintf(msg_buf,"Ptt 小天使特別板 By TonyQ ");
+  send_gps_line("已連上");
+  sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s 特別板 ",QKMJ_VERSION[0],QKMJ_VERSION+1);
+  display_comment(msg_buf);
+  sprintf(msg_buf,"Ptt 小天使特別板 , Host by TonyQ (tonylovejava@gmail.com) ");
   display_comment(msg_buf);
   //display_comment("可以用^C退出");
   get_my_info();
