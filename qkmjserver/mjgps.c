@@ -260,7 +260,8 @@ void list_stat(int fd, char *name) {
 		write_msg(fd, "101找不到這個人!");
 		return;
 	}
-	sprintf(msg_buf, "101◇名稱:%s  %s", record.name, record.last_login_from);
+	//sprintf(msg_buf, "101◇名稱:%s  %s", record.name, record.last_login_from);
+	sprintf(msg_buf, "101◇名稱:%s ", record.name);
 	if ((fp = fopen(RECORD_FILE, "rb")) == NULL) {
 		sprintf(msg_buf, "(stat) Cannot open file\n");
 		err(msg_buf);

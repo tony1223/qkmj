@@ -74,7 +74,7 @@ int msg_type;
           case 3:
             pass_login=1;
             input_mode=TALK_MODE;
-            display_comment("請打 /HELP 查看簡單指令說明");
+            display_comment("請打 /HELP 查看簡單指令說明，/Exit 離開");
             sprintf(msg_buf,"004%s",my_note);
             write_msg(gps_sockfd,msg_buf);
             break;
