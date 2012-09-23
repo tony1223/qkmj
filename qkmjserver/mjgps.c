@@ -34,6 +34,8 @@ int gps_port;
 int log_level;
 char number_map[20][5] = { "０", "１", "２", "３", "４", "５", "６", "７", "８", "９" };
 
+#define MIN_JOIN_MONEY 0  //use -999999 if you allow user to join for debt
+
 int gps_sockfd;
 
 char climark[30];
@@ -911,10 +913,16 @@ void gps_processing() {
 						case 10:
 							lurker(player[player_id].sockfd);
 							break;
-						case 11:
+						case 11:	//JOIN
 							/*
 							 * Check for table server  
 							 */
+							if (player[player_id].money <= MIN_JOIN_MONEY ){
+								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能加入牌桌",
+										player[player_id].money , MIN_JOIN_MONEY);
+								write_msg(player[player_id].sockfd,msg_buf);
+								break;
+							}
 							for (i = 1; i < MAX_PLAYER; i++) {
 								if (player[i].login == 2 && player[i].serv) {
 									/*
