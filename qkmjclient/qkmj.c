@@ -719,10 +719,11 @@ gps()
     endwin();
     exit(0);
   }
-  send_gps_line("連線順利!");
-  sprintf(msg_buf,"QKMJ 休閑麻將 Ver %c.%2s Beta",QKMJ_VERSION[0],QKMJ_VERSION+1);
+  send_gps_line("連線成功!");
+  sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s Beta",QKMJ_VERSION[0],QKMJ_VERSION+1);
+  sprintf(msg_buf,"Ptt 小天使特別板 By TonyQ ");
   display_comment(msg_buf);
-  display_comment("可以用^C退出, 退格是del鍵");
+  //display_comment("可以用^C退出");
   get_my_info();
   sprintf(msg_buf,"100%s",QKMJ_VERSION);
   write_msg(gps_sockfd,msg_buf);

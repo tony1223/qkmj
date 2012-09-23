@@ -95,7 +95,7 @@ int msg_type;
             break;
           case 5:   /* creat a new account */
             ans_buf[0]=0;
-            ask_question("看來你是個新朋友, 你要使用這個名稱嗎？",ans_buf,1,1);
+            ask_question("看來你是個新朋友, 你要使用這個名稱嗎？(y/N)：",ans_buf,1,1);
             if(ans_buf[0]=='y' || ans_buf[0]=='Y')
             {
               ans_buf[0]=0; 
@@ -139,15 +139,10 @@ int msg_type;
             break;
           case 6:
             ans_buf[0]=0;
-            ask_question("重覆進入! 你要殺掉另一個帳號嗎?",ans_buf,1,1);
+            ask_question("重覆進入! 你要殺掉另一個帳號嗎? (y/N)：",ans_buf,1,1);
             if(ans_buf[0]=='y' || ans_buf[0]=='Y')
             {
-              ans_buf[0]=0;
-              ask_question("請輸入你的密碼：",ans_buf,8,0);
-              ans_buf[8]=0;
-              sprintf(msg_buf,"102%s",ans_buf);
-              write_msg(gps_sockfd,msg_buf);
-              strcpy(my_pass,ans_buf);
+            	sprintf(msg_buf,"105");
             }
             else
               leave();
