@@ -52,7 +52,7 @@
 #define org_check_y 13
 #define org_eat_x 61
 #define org_eat_y 16
-#define MAX_PLAYER 30
+#define MAX_PLAYER 50
 #define ASK_MODE 1
 #define TALK_MODE 2
 #define PLAY_MODE 3
