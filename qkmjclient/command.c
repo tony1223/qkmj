@@ -313,6 +313,7 @@ show_allcard(cmd_argv[2][0]-'0');
           write_msg(gps_sockfd,"205");
           init_global_screen();
           write_msg(gps_sockfd,"201");//更新一下目前線上人數跟內容
+          display_comment("您已離開牌桌");
         }
         if(in_serv)
         {
@@ -321,6 +322,7 @@ show_allcard(cmd_argv[2][0]-'0');
           write_msg(gps_sockfd,"205");
           init_global_screen();
           write_msg(gps_sockfd,"201");//更新一下目前線上人數跟內容
+          display_comment("您已關閉牌桌");
         }
         input_mode=TALK_MODE;
         break; 
