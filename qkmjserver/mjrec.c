@@ -212,7 +212,7 @@ modify_user ()
 
     case 3:
 	printf ("請輸入要更改的金額:");
-	scanf ("%D", &money);
+	scanf ("%d", &money);
 	record.money = money;
 	printf ("金額更改為 %ld\n", money);
 	break;
