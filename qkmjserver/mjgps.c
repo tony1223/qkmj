@@ -522,7 +522,7 @@ int read_user_name_update(char *name,int player_id){
 	while (!feof(fp) && fread(&tmp_rec, sizeof (tmp_rec), 1, fp)) {
 		if (strcmp(name, tmp_rec.name) == 0) {
 			record = tmp_rec;
-			if ( player[player_id].id == player_id){
+			if ( player[player_id].id == record.id){ //double check
 				player[player_id].id = record.id;
 				player[player_id].money = record.money;
 			}
