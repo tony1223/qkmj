@@ -195,7 +195,8 @@ int msg_type;
               }
               strcpy(player[1].name,my_name);
               player[1].in_table=1;
-              send_gps_line("開桌");        	  
+              send_gps_line("您已建立新桌，目前人數1人，可使用 /who 查詢本桌清單");
+              send_gps_line("如要關桌請輸入 /Leave (/L) 踢除使用者請用 /Kick ");  
           case 101:
             send_gps_line(buf+3);
             break;
