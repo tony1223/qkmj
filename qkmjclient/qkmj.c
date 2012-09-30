@@ -723,7 +723,8 @@ gps()
   send_gps_line("已連上");
   sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s 特別板 ",QKMJ_VERSION[0],QKMJ_VERSION+1);
   display_comment(msg_buf);
-  sprintf(msg_buf,"Ptt 小天使特別板 , Host by TonyQ (tonylovejava@gmail.com) ");
+  sprintf(msg_buf,"原作者 sywu (吳先祐 Shian-Yow Wu) ");
+  sprintf(msg_buf,"本版本由  TonyQ (tonylovejava@gmail.com / TonyQ@ptt.cc ) 維護 ");
   display_comment(msg_buf);
   //display_comment("可以用^C退出");
   get_my_info();

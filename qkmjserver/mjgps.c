@@ -758,7 +758,7 @@ void gps_processing() {
 		for (player_id = 1; player_id < MAX_PLAYER; player_id++) {
 			if (player[player_id].login) {
 				if (FD_ISSET(player[player_id].sockfd, &rfds)) {
-					/*
+					/* 
 					 * Processing the player's information 
 					 */
 					read_code = read_msg(player[player_id].sockfd, buf);
