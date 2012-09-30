@@ -312,6 +312,7 @@ show_allcard(cmd_argv[2][0]-'0');
           close_join();
           write_msg(gps_sockfd,"205");
           init_global_screen();
+          write_msg(gps_sockfd,"201");//更新一下目前線上人數跟內容
         }
         if(in_serv)
         {
@@ -319,6 +320,7 @@ show_allcard(cmd_argv[2][0]-'0');
           close_serv();
           write_msg(gps_sockfd,"205");
           init_global_screen();
+          write_msg(gps_sockfd,"201");//更新一下目前線上人數跟內容
         }
         input_mode=TALK_MODE;
         break; 
