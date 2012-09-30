@@ -425,6 +425,17 @@ int msg_type;
             case 102:
               display_comment(buf+3);
               break;
+            case 199://LEAVE 開桌者離開牌桌
+              write_msg(gps_sockfd,"205"); //通知 GPS Server
+              close(table_sockfd);
+              FD_CLR(table_sockfd,&afds);
+              in_join=0;
+              input_mode=TALK_MODE;
+              init_global_screen();
+              display_comment("開桌者已離開牌桌");
+              display_comment("-------------------");
+              write_msg(gps_sockfd,"201");//更新一下目前線上人數跟內容
+              break;
             case 200://LEAVE 離開牌桌
               write_msg(gps_sockfd,"205"); //通知 GPS Server
               close(table_sockfd);

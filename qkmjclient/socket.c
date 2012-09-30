@@ -235,8 +235,7 @@ char *msg;
 }
 
 
-close_client(player_id)
-int player_id;
+close_client(int player_id)
 {
   char msg_buf[255];
 
@@ -271,11 +270,11 @@ close_serv()
 {
   int i;
   in_serv=0;
-  for(i=2;i<MAX_PLAYER;i++)
+  for(i=2;i<MAX_PLAYER;i++) //Note that i start from 2
   {
     if(player[i].in_table)
     {
-      write_msg(player[i].sockfd,"200");
+      write_msg(player[i].sockfd,"199");
       close_client(i);
 /*
       shutdown(player[i].sockfd,2);
