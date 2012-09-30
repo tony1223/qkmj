@@ -175,7 +175,7 @@ print_record ()
 void
 modify_user ()
 {
-    int i, id;
+    int i;
     char name[40];
     char account[40];
     long money;
@@ -184,14 +184,12 @@ modify_user ()
     gets (account);
     gets (account);
     
-
-    if (id < 0)
-	return;
     int res = read_user_name(account);
-    if(res < 0 ){
+    if(res == 0 ){
     	printf(" 查無此人 ");
     	return;
     }
+    
     printf ("\n");
     printf ("(1) 更改名稱\n");
     printf ("(2) 重設密碼\n");
