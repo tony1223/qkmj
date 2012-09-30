@@ -438,7 +438,7 @@ int msg_type;
               strcpy(player[buf[3]].name,buf+5);
               player[buf[3]].in_table=1;
               player[buf[3]].sit=buf[4];
-              sprintf(msg_buf,"%s 加入此桌",player[buf[3]].name);
+              sprintf(msg_buf,"%s 加入此桌，目前人數",player[buf[3]].name,player_in_table + 1);
               send_gps_line(msg_buf);
               player_in_table++;
               if(player[buf[3]].sit)

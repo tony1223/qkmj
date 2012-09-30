@@ -220,7 +220,7 @@ char *msg;
         }
         if(in_join || in_serv)
         {
-          display_comment("請先離開此桌");
+          display_comment("請先離開目前桌，才能加入別桌。(/Leave)");
           break;
         }
         clear_variable();
