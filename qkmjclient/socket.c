@@ -131,7 +131,7 @@ accept_new_client()
       }
     }
   }
-  sprintf(msg_buf,"%s 加入此桌",new_client_name);
+  sprintf(msg_buf,"%s 加入此桌，目前人數 %d ", new_client_name ,player_in_table);
   send_gps_line(msg_buf);
   strcpy(player[player_id].name, new_client_name);
   player[player_id].id=new_client_id;
