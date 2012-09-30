@@ -115,7 +115,7 @@ print_record ()
     case 4:
     case 5:
 	printf ("½Ð¿é¤Jª÷ÃB:");
-	scanf ("%D", &money);
+	scanf ("%d", &money);
 	break;
 
     default:
