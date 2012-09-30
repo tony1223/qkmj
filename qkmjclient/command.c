@@ -170,7 +170,7 @@ help()
   send_gps_line("/MSG <名稱> <訊息>  送訊息給特定使用者");
   send_gps_line("/INVITE <名稱>      邀請使用者到此桌");
   send_gps_line("/KICK <名稱>        將使用者踢出此桌 (桌長才可用)");
-  send_gps_line("/NOTE <附注>        更改此桌的附注");
+  send_gps_line("/NOTE <附註>        更改此桌的附註");
   send_gps_line("/LEAVE         /L   離開一桌");
   send_gps_line("/STAT <名稱>        看使用者狀態");
   send_gps_line("/BEEP [ON|OFF]      設定聲音開關");
