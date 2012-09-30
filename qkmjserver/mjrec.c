@@ -177,15 +177,21 @@ modify_user ()
 {
     int i, id;
     char name[40];
+    char account[40];
     long money;
 
-    printf ("請輸入使用者代號:");
-    scanf ("%d", &id);
+    printf ("請輸入使用者帳號:");
+    gets (account);
+    gets (account);
+    
 
     if (id < 0)
 	return;
-
-    read_user_id (id);
+    int res = read_user_name(account);
+    if(res < 0 ){
+    	printf(" 查無此人 ");
+    	return;
+    }
     printf ("\n");
     printf ("(1) 更改名稱\n");
     printf ("(2) 重設密碼\n");
