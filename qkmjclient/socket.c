@@ -137,7 +137,7 @@ accept_new_client()
   player[player_id].id=new_client_id;
   player[player_id].money=new_client_money;
   /* Send the info of new comer to everyone */
-  sprintf(msg_buf,"201%c%c%s", (char) player_id ,player[player_id].sit,
+  sprintf(msg_buf,"201%c%c%c%s", (char) player_id ,player[player_id].sit,player_in_table,
           player[player_id].name);
   broadcast_msg(1,msg_buf); /* NOTICE:including the new comer!!! */
   msg_buf[2]='5';   /* Set msg_id to 205 */
@@ -245,8 +245,8 @@ int player_id;
     init_global_screen();
     input_mode=TALK_MODE;
   }
-  player_in_table--;
-  sprintf(msg_buf,"206%c",player_id);
+  player_in_table -- ;
+  sprintf(msg_buf,"206%c%c",player_id,player_in_table);
   broadcast_msg(player_id,msg_buf);
   sprintf(msg_buf,"%s Â÷¶}¦¹®à",player[player_id].name);
   display_comment(msg_buf);

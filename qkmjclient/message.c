@@ -239,7 +239,7 @@ int msg_type;
                   display_comment(buf+3);
                   broadcast_msg(player_id,buf);
                   break;
-                case 200:
+                case 200://Other User Leave
                   close_client(player_id);
                   break;
                 case 290:
@@ -435,16 +435,16 @@ int msg_type;
               write_msg(gps_sockfd,"201");//穝ヘ玡絬计蛤ず甧
               break;
             case 201:  /* get the new comer's info */
-              strcpy(player[buf[3]].name,buf+5);
-              player[buf[3]].in_table=1;
-              player[buf[3]].sit=buf[4];
+              strcpy(player[buf[3]].name,buf+6);
+              player[buf[3]].in_table = 1;
+              player[buf[3]].sit = buf[4];
+              player_in_table = buf[5];
               if(strcmp(my_name,player[buf[3]].name)==0){
-            	  sprintf(msg_buf,"眤ヘ玡计 %d ",player_in_table + 1);
+            	  sprintf(msg_buf,"眤ヘ玡计 %d ",player_in_table);
               }else{
-            	  sprintf(msg_buf,"%s ヘ玡计 %d ",player[buf[3]].name,player_in_table + 1);
+            	  sprintf(msg_buf,"%s ヘ玡计 %d ",player[buf[3]].name,player_in_table);
               }
               send_gps_line(msg_buf);
-              player_in_table++;
               if(player[buf[3]].sit)
                 table[player[buf[3]].sit]=buf[3];
               break;
@@ -458,7 +458,6 @@ int msg_type;
               strcpy(player[buf[3]].name,buf+5);
               player[buf[3]].sit=buf[4];
               player[buf[3]].in_table=1;
-              player_in_table++;
               table[buf[4]]=buf[3];
               break;
             case 204:
@@ -489,10 +488,10 @@ int msg_type;
                 init_global_screen();
                 input_mode=TALK_MODE;
               }
+              player_in_table = buf[4];
               sprintf(msg_buf,"%s 瞒秨",player[buf[3]].name);
               display_comment(msg_buf);
               player[buf[3]].in_table=0;
-              player_in_table--;
               break;
             case 290:
               opening();
