@@ -1,2 +1,6 @@
 **/*.o
 
+qkmjclient/qkmj
+qkmjserver/mjgps
+qkmjserver/mjrec
+
