@@ -330,7 +330,7 @@ show_allcard(cmd_argv[2][0]-'0');
         sprintf(msg_buf,"004%s",msg+6);
         write_msg(gps_sockfd,msg_buf);
         break;
-      case STAT:
+      case STAT: // /STAT
         if(narg<2)
           strcpy(cmd_argv[2],my_name);
         sprintf(msg_buf,"005%s",cmd_argv[2]);

@@ -615,8 +615,6 @@ void print_news(int fd, char *name) {
 void welcome_user(int player_id) {
 	char msg_buf[255];
 	int fd;
-	int total_num = 0;
-	int online_num = 0;
 	int i;
 	struct player_record tmp_rec;
 
@@ -642,8 +640,25 @@ void welcome_user(int player_id) {
 	player[player_id].money = record.money;
 	player[player_id].login = 2;
 	player[player_id].note[0] = 0;
+	show_online_users(player_id);
+	list_stat(player[player_id].sockfd, player[player_id].name);
+	write_msg(player[player_id].sockfd, "003");
+	sprintf(msg_buf, "120%5d%ld", player[player_id].id, player[player_id].money);
+	write_msg(player[player_id].sockfd, msg_buf);
+	player[player_id].input_mode = CMD_MODE;
+}
+
+void show_online_users(int player_id){
+	char msg_buf[255];
+	int fd;
+	int total_num = 0;
+	int online_num = 0;
+	int i;
+	struct player_record tmp_rec;
+
+	fd = player[player_id].sockfd;
 	if ((fp = fopen(RECORD_FILE, "rb")) == NULL) {
-		sprintf(msg_buf, "(welcome) cannot open file\n");
+		sprintf(msg_buf, "(current) cannot open file\n");
 		err(msg_buf);
 	} else {
 		rewind(fp);
@@ -659,12 +674,19 @@ void welcome_user(int player_id) {
 	}
 	sprintf(msg_buf, "101◇目前上線人數: %d 人       注冊人數: %d 人", online_num, total_num);
 	write_msg(player[player_id].sockfd, msg_buf);
+}
+void show_current_state(int player_id) {
+	char msg_buf[255];
+	int fd;
+	int i;
+
+	show_online_users(player_id);	
 	list_stat(player[player_id].sockfd, player[player_id].name);
 	write_msg(player[player_id].sockfd, "003");
 	sprintf(msg_buf, "120%5d%ld", player[player_id].id, player[player_id].money);
 	write_msg(player[player_id].sockfd, msg_buf);
-	player[player_id].input_mode = CMD_MODE;
 }
+
 
 int find_user_name(char *name) {
 	int i;
@@ -1030,7 +1052,7 @@ void gps_processing() {
 								close_id(id);
 							}
 							break;
-						case 205:
+						case 205://LEAVE 離開牌桌
 							if (player[player_id].serv) {
 								/*
 								 * clear all client 
@@ -1047,6 +1069,8 @@ void gps_processing() {
 								player[player_id].join = 0;
 							}
 							break;
+						case 201: //顯示目前狀態
+							show_current_state(player_id);
 						case 500:
 							if (strcmp(player[player_id].name, "candle") == 0)
 								shutdown_server();
