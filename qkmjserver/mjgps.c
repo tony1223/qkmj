@@ -966,6 +966,11 @@ void gps_processing() {
 							/*
 							 * Check for table server  
 							 */
+							if(!read_user_name_update(player[player_id].name,player_id)){
+								sprintf(msg_buf,"101查無此人");
+								write_msg(player[player_id].sockfd,msg_buf);
+								break;
+							}							
 							if (player[player_id].money <= MIN_JOIN_MONEY ){
 								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能加入牌桌",
 										player[player_id].money , MIN_JOIN_MONEY);
@@ -1039,6 +1044,11 @@ void gps_processing() {
 							list_table(player[player_id].sockfd, 2);
 							break;
 						case 14://檢查開桌資格
+							if(!read_user_name_update(player[player_id].name,player_id)){
+								sprintf(msg_buf,"101查無此人");
+								write_msg(player[player_id].sockfd,msg_buf);
+								break;
+							}							
 							if (player[player_id].money <= MIN_JOIN_MONEY ){
 								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能開桌",
 										player[player_id].money , MIN_JOIN_MONEY);
