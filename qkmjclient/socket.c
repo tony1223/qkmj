@@ -248,7 +248,7 @@ int player_id;
   player_in_table -- ;
   sprintf(msg_buf,"206%c%c",player_id,player_in_table);
   broadcast_msg(player_id,msg_buf);
-  sprintf(msg_buf,"%s 離開此桌",player[player_id].name);
+  sprintf(msg_buf,"%s 離開此桌，目前人數剩下 %d 人",player[player_id].name,player_in_table);
   display_comment(msg_buf);
   close(player[player_id].sockfd);
   FD_CLR(player[player_id].sockfd,&afds);

@@ -489,7 +489,7 @@ int msg_type;
                 input_mode=TALK_MODE;
               }
               player_in_table = buf[4];
-              sprintf(msg_buf,"%s 離開此桌",player[buf[3]].name);
+              sprintf(msg_buf,"%s 離開此桌，目前人數剩下 %d 人",player[buf[3]].name,player_in_table);
               display_comment(msg_buf);
               player[buf[3]].in_table=0;
               break;
