@@ -313,7 +313,8 @@ who(fd, name)
 				strcpy(msg_buf, "101");
 			}
 			strcat(msg_buf, player[i].name);
-			strcat(msg_buf, "  ");
+			strcat(msg_buf, "   ");
+			strcat(msg_buf, player[i].money);
 		}
 	if (strlen(msg_buf) > 4)
 		write_msg(fd, msg_buf);
@@ -501,6 +502,30 @@ int read_user_name(name)
 	while (!feof(fp) && fread(&tmp_rec, sizeof (tmp_rec), 1, fp)) {
 		if (strcmp(name, tmp_rec.name) == 0) {
 			record = tmp_rec;
+			fclose(fp);
+			return 1;
+		}
+	}
+	fclose(fp);
+	return 0;
+}
+int read_user_name_update(char *name,int player_id){
+	struct player_record tmp_rec;
+	char msg_buf[255];
+
+	if ((fp = fopen(RECORD_FILE, "a+b")) == NULL) {
+		sprintf(msg_buf, "(read_user_name) Cannot open file!\n");
+		err(msg_buf);
+		return;
+	}
+	rewind(fp);
+	while (!feof(fp) && fread(&tmp_rec, sizeof (tmp_rec), 1, fp)) {
+		if (strcmp(name, tmp_rec.name) == 0) {
+			record = tmp_rec;
+			if ( player[player_id].id == player_id){
+				player[player_id].id = record.id;
+				player[player_id].money = record.money;
+			}
 			fclose(fp);
 			return 1;
 		}
@@ -918,7 +943,9 @@ void gps_processing() {
 							strcpy(player[player_id].note, buf + 3);
 							break;
 						case 5:
+							show_online_users(player_id);
 							list_stat(player[player_id].sockfd, buf + 3);
+							
 							break;
 						case 6:
 							who(player[player_id].sockfd, buf + 3);
@@ -982,6 +1009,11 @@ void gps_processing() {
 							full: ;
 							break;
 						case 12:
+							if(!read_user_name_update(player[player_id].name,player_id)){
+								sprintf(msg_buf,"101查無此人");
+								write_msg(player[player_id].sockfd,msg_buf);
+								break;
+							}
 							if (player[player_id].money <= MIN_JOIN_MONEY ){
 								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能開桌",
 										player[player_id].money , MIN_JOIN_MONEY);
