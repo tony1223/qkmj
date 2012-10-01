@@ -75,19 +75,22 @@ char card;
   wprintw(stdscr,"%s ",player[table[sit]].name);
   
   /* record start */
-  sprintf(result_record_buf,"022{card_owner:\"%s\",winer:\"%s\",[",player[table[card_owner]].name,player[table[sit]].name);//Record
-  result_buf[0]=0;
-  for(sitInd = 1; i <= 4;++sitInd){
-	  sprintf(result_buf,"%d",sitInd);
-	  strcat(result_record_buf,result_buf);
-	  strcat(result_record_buf,":\"");
-	  for(i=0;i<pool[sitInd].num;i++){
-	    sprintf(result_buf,"%d,",pool[sitInd].card[i]);
-	    strcat(result_record_buf,result_buf);
+  if(in_serv)
+  {  
+	  sprintf(result_record_buf,"022{card_owner:\"%s\",winer:\"%s\",[",player[table[card_owner]].name,player[table[sit]].name);//Record
+	  result_buf[0]=0;
+	  for(sitInd = 1; i <= 4;++sitInd){
+		  sprintf(result_buf,"%d",sitInd);
+		  strcat(result_record_buf,result_buf);
+		  strcat(result_record_buf,":\"");
+		  for(i=0;i<pool[sitInd].num;i++){
+		    sprintf(result_buf,"%d,",pool[sitInd].card[i]);
+		    strcat(result_record_buf,result_buf);
+		  }
+		  strcat(result_record_buf,"\",");
 	  }
-	  strcat(result_record_buf,"\",");
+	  strcat(result_record_buf,"],tais:\"");
   }
-  strcat(result_record_buf,"],tais:\"");
   /* record end */
   
   if(sit==card_owner){
@@ -109,8 +112,11 @@ char card;
       wprintw(stdscr,"%-10s%2d 台",tai[i].name,
               card_comb[max_index].tai_score[i]);
       /* record */
-      sprintf(result_buf,"%10s::%d;;",tai[i].name,card_comb[max_index].tai_score[i]);
-      strcat(result_record_buf,result_buf);
+      if(in_serv)
+      {  
+    	  sprintf(result_buf,"%10s::%d;;",tai[i].name,card_comb[max_index].tai_score[i]);
+    	  strcat(result_record_buf,result_buf);
+      }
       /* record */
       j++;
       if(j==7)
@@ -126,8 +132,11 @@ char card;
   if(card_comb[max_index].tai_score[52])  /* 連莊 */
   {
 	/* record */
-	sprintf(result_buf,"cont_win:%d,cont_tai:%d,",info.cont_dealer,info.cont_dealer*2);
-	strcat(result_record_buf,result_buf);
+	if(in_serv)
+	{  
+		sprintf(result_buf,"cont_win:%d,cont_tai:%d,",info.cont_dealer,info.cont_dealer*2);
+		strcat(result_record_buf,result_buf);
+	}
 	/* record */
 	
     wmove(stdscr,THROW_Y+j,THROW_X+k);
@@ -143,15 +152,21 @@ char card;
   wprintw(stdscr,"共 %2d 台",card_comb[max_index].tai_sum);
   
   /* record */
+  if(in_serv)
+  {  
   	sprintf(result_buf,"count_win:%d,count_tai:%d,",info.cont_dealer,info.cont_dealer*2);
   	strcat(result_record_buf,result_buf);
+  }
   /* record */  
   if((sit==card_owner && sit!=info.dealer) || 
      (sit!=card_owner && card_owner==info.dealer))   
   {
 	  /* record */
+	  if(in_serv)
+	  {  
 		sprintf(result_buf,"is_dealer:1,");
 		strcat(result_record_buf,result_buf);
+	  }
 	  /* record */  
 	  	
       if(info.cont_dealer>0)
@@ -186,13 +201,16 @@ char card;
   show_newcard(sit,4);
   return_cursor();
   
-  /* record start */
-	sprintf(result_buf,"base_value:%d,",info.base_value);
-	strcat(result_record_buf,result_buf);
-	sprintf(result_buf,"tai_value:%d,",info.tai_value);
-	strcat(result_record_buf,result_buf);
-	
-	strcat(result_record_buf,"moneys:[");
+    /* record start */
+	if(in_serv)
+	{  
+		sprintf(result_buf,"base_value:%d,",info.base_value);
+		strcat(result_record_buf,result_buf);
+		sprintf(result_buf,"tai_value:%d,",info.tai_value);
+		strcat(result_record_buf,result_buf);
+		
+		strcat(result_record_buf,"moneys:[");
+	}	
   /* record end */  
   
   /* Process money */
@@ -236,7 +254,7 @@ char card;
       if(table[i]) 
       {
     	/* Record start*/
-		sprintf(result_buf,"{name:\"%s\",now_money:%d,change_money:%d}",
+		sprintf(result_buf,"{name:\"%s\",now_money:%ld,change_money:%ld}",
 				player[table[i]].name,
 				 player[table[i]].money,
 				change_money[i]
@@ -253,10 +271,11 @@ char card;
       }
       strcat(result_record_buf,"]"); //record
     }
+    //write_msg(gps_sockfd,result_record_buf);  
   }
   
   //Send result record to server side
-  write_msg(gps_sockfd,result_record_buf);  
+
   
   wait_a_key(PRESS_ANY_KEY_TO_CONTINUE);      
   set_color(37,40);
