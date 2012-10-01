@@ -273,7 +273,7 @@ process_make(sit, card)
 		if( sendlog == 1){
 			long current_time = 0;
 			time(&current_time);
-			sprintf(result_buf, "],time:%ld}", current_time);
+			sprintf(result_buf, "],time:%ld000}", current_time);
 			strcat(result_record_buf, result_buf);
 			result_record_buf[strlen(result_record_buf)] = '\0';
 			write_msg(gps_sockfd, result_record_buf);
