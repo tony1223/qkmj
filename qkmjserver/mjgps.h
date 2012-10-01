@@ -12,6 +12,7 @@
 #define NEWS_FILE "/var/qkrecord/news.txt"
 #define BADUSER_FILE "/var/qkrecord/baduser.txt"
 #define LOG_FILE "/var/qkrecord/qkmj.log"
+#define GAME_FILE "/var/qkrecord/qkmj_game.log"
 
 #define DEFAULT_RECORD_FILE "/var/qkrecord/qkmj.rec"
 #define DEFAULT_MONEY 0

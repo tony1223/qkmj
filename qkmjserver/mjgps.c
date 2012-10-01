@@ -67,6 +67,18 @@ int err(char *errmsg) {
 	 fclose (log_fp);
 }
 
+int game_log(char *gamemsg) { //TODO implements this
+	 if ((log_fp = fopen (GAME_FILE, "a")) == NULL)
+	 {
+		 printf ("Cannot open GAME_FILE\n");
+		 return -1;
+	 }
+	 fprintf (log_fp, "%s", gamemsg);
+
+	 fclose (log_fp);
+}
+
+
 int read_msg(int fd, char *msg) {
 	int n;
 	char msg_buf[255];
@@ -1057,7 +1069,7 @@ void gps_processing() {
 							}
 							write_msg(player[player_id].sockfd,"012");//½T»{¶}®à
 							break;
-						case 20:
+						case 20://WIN GAME
 							strcpy(msg_buf, buf + 3);
 							*(msg_buf + 5) = 0;
 							id = atoi(msg_buf);
@@ -1076,6 +1088,9 @@ void gps_processing() {
 						 * FIND 
 						 */
 							find_user(player[player_id].sockfd, buf + 3);
+							break;
+						case 22: //Game record
+							game_log(buf + 3);
 							break;
 						case 111:
 							/*

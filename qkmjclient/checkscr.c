@@ -46,8 +46,10 @@ process_make(sit,card)
 char sit;
 char card;
 {
-  int i,j,k,max_sum,max_index;
+  int i,j,k,max_sum,max_index,sitInd;
   char msg_buf[80];
+  char result_record_buf[2000]; 
+  char result_buf[40];
   long change_money[5];
 
   play_mode=WAIT_CARD;
@@ -71,10 +73,26 @@ char card;
   set_mode(1);
   wmove(stdscr,THROW_Y,THROW_X);
   wprintw(stdscr,"%s ",player[table[sit]].name);
-  if(sit==card_owner)
+  
+  /* record start */
+  springf(result_record_buf,"022{card_owner:\"%s\",winer:\"%s\",[",table[card_owner]].name,player[table[sit]].name);//Record
+  result_buf[0]=0;
+  for(sitInd = 1; i <= 4;++sitInd){
+	  sprintf(result_buf,"%d",sitInd);
+	  strcat(result_record_buf,result_buf);
+	  strcat(result_record_buf,":\"");
+	  for(i=0;i<pool[sitInd].num;i++){
+	    sprintf(result_buf,"%d,",pool[sitInd].card[i]);
+	    strcat(result_record_buf,result_buf);
+	  }
+	  strcat(result_record_buf,"\",");
+  }
+  strcat(result_record_buf,"],tais:\"");
+  /* record end */
+  
+  if(sit==card_owner){
     wprintw(stdscr,"自摸");
-  else
-  {
+  } else{
     wprintw(stdscr,"胡牌");
     wmove(stdscr,THROW_Y,THROW_X+19);
     wprintw(stdscr,"%s ",player[table[card_owner]].name);
@@ -90,6 +108,10 @@ char card;
       wmove(stdscr,THROW_Y+j,THROW_X+k);
       wprintw(stdscr,"%-10s%2d 台",tai[i].name,
               card_comb[max_index].tai_score[i]);
+      /* record */
+      sprintf(result_buf,"%10s::%d;;",tai[i].name,card_comb[max_index].tai_score[i]);
+      strcat(result_record_buf,result_buf);
+      /* record */
       j++;
       if(j==7)
       {
@@ -98,8 +120,16 @@ char card;
       }
     }
   }
+  
+  strcat(result_record_buf,"\",");
+  
   if(card_comb[max_index].tai_score[52])  /* 連莊 */
   {
+	/* record */
+	sprintf(result_buf,"cont_win:%d,cont_tai:%d,",info.cont_dealer,info.cont_dealer*2);
+	strcat(result_record_buf,result_buf);
+	/* record */
+	
     wmove(stdscr,THROW_Y+j,THROW_X+k);
     if(info.cont_dealer<10)
       wprintw(stdscr,"連%s拉%s  %2d 台",number_item[info.cont_dealer],
@@ -111,9 +141,19 @@ char card;
   set_color(31,40);
   wmove(stdscr,THROW_Y+6,THROW_X+26);
   wprintw(stdscr,"共 %2d 台",card_comb[max_index].tai_sum);
+  
+  /* record */
+  	sprintf(result_buf,"count_win:%d,count_tai:%d,",info.cont_dealer,info.cont_dealer*2);
+  	strcat(result_record_buf,result_buf);
+  /* record */  
   if((sit==card_owner && sit!=info.dealer) || 
      (sit!=card_owner && card_owner==info.dealer))   
   {
+	  /* record */
+		sprintf(result_buf,"is_dealer:1,");
+		strcat(result_record_buf,result_buf);
+	  /* record */  
+	  	
       if(info.cont_dealer>0)
       {
         wmove(stdscr,THROW_Y+7,THROW_X+15);
@@ -129,8 +169,7 @@ char card;
       else
       {
         wmove(stdscr,THROW_Y+7,THROW_X+24);
-        wprintw(stdscr,"莊家 %2d 台",
-        card_comb[max_index].tai_sum+1);
+        wprintw(stdscr,"莊家 %2d 台", card_comb[max_index].tai_sum+1);
       }
   }
   wrefresh(stdscr);
@@ -146,47 +185,79 @@ char card;
   }
   show_newcard(sit,4);
   return_cursor();
+  
+  /* record start */
+	sprintf(result_buf,"base_value:%d,",info.base_value);
+	strcat(result_record_buf,result_buf);
+	sprintf(result_buf,"tai_value:%d,",info.tai_value);
+	strcat(result_record_buf,result_buf);
+	
+	strcat(result_record_buf,"moneys:[");
+  /* record end */  
+  
   /* Process money */
   if(sit==card_owner)  /* 自摸 */
   {
     for(i=1;i<=4;i++)
     {
+      
       if(i!=sit)
       {
-        if(i==info.dealer)
+        if(i==info.dealer){
           change_money[i]=-(info.base_value+
                            (card_comb[max_index].tai_sum+1+info.cont_dealer*2)*
                            info.tai_value);
-        else
+        }else{
           change_money[i]=-(info.base_value+card_comb[max_index].tai_sum*
                             info.tai_value);
+        }
         change_money[sit]+=-change_money[i];
       }
     }
   }
   else       /* 別人放槍 */
   { 
-    if(card_owner==info.dealer)
+    if(card_owner==info.dealer){
       change_money[card_owner]=-(info.base_value+(card_comb[max_index].tai_sum+
                                  1+info.cont_dealer*2)*info.tai_value);
-    else 
+    }else{ 
       change_money[card_owner]=-(info.base_value+card_comb[max_index].tai_sum*
                                  info.tai_value);
+    }
     change_money[sit]+=-change_money[card_owner];
   }
+  
   /* Send money info to GPS */
   if(in_serv)
   {
     for(i=1;i<=4;i++)
     {
+      strcat(result_record_buf,"["); //record   	
       if(table[i]) 
       {
+    	/* Record start*/
+		sprintf(result_buf,"{name:\"%s\",now_money:%d,change_money:%d}",
+				player[table[i]].name,
+				 player[table[i]].money,
+				change_money[i]
+		);
+		strcat(result_record_buf,result_buf);
+		if(i != 4){
+			strcat(result_record_buf,",");
+		}
+		/* Record end */
+    		
         sprintf(msg_buf,"020%5d%ld",player[table[i]].id,
                 player[table[i]].money+change_money[i]);
         write_msg(gps_sockfd,msg_buf);
       }
+      strcat(result_record_buf,"]"); //record
     }
   }
+  
+  //Send result record to server side
+  write_msg(gps_sockfd,result_record_buf);  
+  
   wait_a_key(PRESS_ANY_KEY_TO_CONTINUE);      
   set_color(37,40);
   clear_screen_area(THROW_Y,THROW_X,8,34);
