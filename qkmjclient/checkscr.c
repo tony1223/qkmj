@@ -43,7 +43,7 @@ process_make(sit, card)
 	int i, j, k, max_sum, max_index, sitInd;
 	char msg_buf[80];
 	char result_record_buf[2000];
-	result_record_buf[0] = \0;
+	result_record_buf[0] = '\0';
 	char result_buf[40];
 	long change_money[5];
 
@@ -279,7 +279,7 @@ process_make(sit, card)
 			
 			sprintf(result_buf, ",length:%d", strlen(result_record_buf));
 			strcat(result_record_buf, result_buf);
-			result_record_buf[strlen(result_record_buf)+1] = \0;
+			result_record_buf[strlen(result_record_buf)] = '\0';
 			write_msg(gps_sockfd, result_record_buf);
 			
 		}
