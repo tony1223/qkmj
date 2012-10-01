@@ -207,9 +207,7 @@ char *msg;
   return 1;
 }
       
-write_msg(fd,msg)
-int fd;
-char *msg;
+write_msg(int fd,char *msg)
 {
   int n;
   n=strlen(msg);
@@ -224,14 +222,13 @@ char *msg;
 }
 
 /* Command for server */
-broadcast_msg(id,msg)
-int id;
-char *msg;
+broadcast_msg(int id,chat *msg)
 {
   int i;
-  for(i=2;i<MAX_PLAYER;i++)
+  for(i=2;i<MAX_PLAYER;i++){
     if(player[i].in_table && i!=id)
       write_msg(player[i].sockfd,msg);
+  }
 }
 
 

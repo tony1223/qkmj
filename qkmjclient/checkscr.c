@@ -270,7 +270,11 @@ process_make(sit, card)
 		time(&current_time);
 		sprintf(result_buf, "],time:%ld}", current_time);
 		strcat(result_record_buf, result_buf);
-		//write_msg(gps_sockfd, result_record_buf);
+		
+		sprintf(result_buf, ",length:%d%s", strlen(result_record_buf));
+		strcat(result_record_buf, result_buf);
+		
+		write_msg(gps_sockfd, result_record_buf);
 		/* record end */
 	}
 
@@ -308,8 +312,9 @@ process_make(sit, card)
 	wait_a_key(PRESS_ANY_KEY_TO_CONTINUE);
 	if (in_serv) {
 		wait_hit[my_sit]=1;
-	} else
+	} else{
 		write_msg(table_sockfd, "450");
+	}
 }
 
 process_epk(check)
