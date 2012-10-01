@@ -91,12 +91,14 @@ int read_msg(int fd, char *msg) {
 		return 2;
 	}
 	timeup = 0;
-	alarm(3);
+	alarm(5);
 	do {
 		recheck: ;
 		read_code = read(fd, msg, 1);
 		if (read_code == -1) {
 			if (errno != EWOULDBLOCK) {
+				sprintf(msg_buf,"fail in read_msg,errno = %d",errno);
+				err(msg_buf)
 				alarm(0);
 				return 0;
 			} else if (timeup) {
@@ -1091,7 +1093,7 @@ void gps_processing() {
 						 */
 							find_user(player[player_id].sockfd, buf + 3);
 							break;
-						case 22: //Game record
+						case 900: //Game record
 							err("get game record\n");
 							game_log(buf + 3);
 							err("get game record end\n");
@@ -1208,6 +1210,7 @@ void broken_pipe() {
 }
 
 void time_out() {
+	err("timeout!");
 	timeup = 1;
 }
 extern char *crypt();

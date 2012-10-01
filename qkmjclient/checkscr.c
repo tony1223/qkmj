@@ -43,9 +43,12 @@ process_make(sit, card)
 	int i, j, k, max_sum, max_index, sitInd;
 	char msg_buf[80];
 	char result_record_buf[2000];
+	result_record_buf[0] = \0;
 	char result_buf[40];
 	long change_money[5];
 
+	int sendlog = 0;
+	
 	play_mode=WAIT_CARD;
 	for (i=0; i<=4; i++)
 		change_money[i]=0;
@@ -67,11 +70,10 @@ process_make(sit, card)
 	wprintw(stdscr, "%s ", player[table[sit]].name);
 
 	/* record start */
-	if (in_serv) {
+	if (in_serv && sendlog == 1) {
 		sprintf(result_record_buf,
-				"022{card_owner:\"%s\",winer:\"%s\",cards:{",
+				"900{card_owner:\"%s\",winer:\"%s\",cards:{",
 				player[table[card_owner]].name, player[table[sit]].name);//Record
-		result_buf[0]=0;
 		for (sitInd = 1; sitInd <= 4; ++sitInd) {
 			sprintf(result_buf, "\"%s\":{ind:\"%d\",card:[", player[table[sitInd]].name,sitInd);
 			strcat(result_record_buf, result_buf);
@@ -79,12 +81,13 @@ process_make(sit, card)
 				sprintf(result_buf, "%d,", pool[sitInd].card[i]);
 				strcat(result_record_buf, result_buf);
 			}
-			strcat(result_record_buf, "],out_card:[");//TODO handle out card
+			strcat(result_record_buf, "],out_card:[");
 			
 			for (i=0; i < pool[sitInd].out_card_index; i++) {
 				strcat(result_record_buf, "[");
-				for (j=0; j < 6; j++) {
+				for (j = 1 ; j < 6; j++) {
 					sprintf(result_buf, "%d,", pool[sitInd].out_card[i][j]);
+					strcat(result_record_buf, result_buf);
 				}
 				strcat(result_record_buf, result_buf);
 				strcat(result_record_buf, "]");
@@ -119,7 +122,7 @@ process_make(sit, card)
 			wprintw(stdscr, "%-10s%2d 台", tai[i].name,
 					card_comb[max_index].tai_score[i]);
 			/* record */
-			if (in_serv) {
+			if (in_serv && sendlog == 1) {
 				sprintf(result_buf, "%10s::%d;;", tai[i].name,
 						card_comb[max_index].tai_score[i]);
 				strcat(result_record_buf, result_buf);
@@ -138,7 +141,7 @@ process_make(sit, card)
 	if (card_comb[max_index].tai_score[52]) /* 連莊 */
 	{
 		/* record */
-		if (in_serv) {
+		if (in_serv && sendlog == 1) {
 			sprintf(result_buf, "cont_win:%d,cont_tai:%d,", info.cont_dealer,
 					info.cont_dealer*2);
 			strcat(result_record_buf, result_buf);
@@ -158,7 +161,7 @@ process_make(sit, card)
 	wprintw(stdscr, "共 %2d 台", card_comb[max_index].tai_sum);
 
 	/* record */
-	if (in_serv) {
+	if (in_serv && sendlog == 1) {
 		sprintf(result_buf, "count_win:%d,count_tai:%d,", info.cont_dealer,
 				info.cont_dealer*2);
 		strcat(result_record_buf, result_buf);
@@ -167,7 +170,7 @@ process_make(sit, card)
 	if ((sit==card_owner && sit!=info.dealer) || (sit!=card_owner && card_owner
 			==info.dealer)) {
 		/* record */
-		if (in_serv) {
+		if (in_serv && sendlog == 1) {
 			sprintf(result_buf, "is_dealer:1,dealer:\"%s\",",
 					player[table[info.dealer]].name);
 			strcat(result_record_buf, result_buf);
@@ -203,7 +206,7 @@ process_make(sit, card)
 	return_cursor();
 
 	/* record start */
-	if (in_serv) {
+	if (in_serv && sendlog == 1) {
 		sprintf(result_buf, "base_value:%d,", info.base_value);
 		strcat(result_record_buf, result_buf);
 		sprintf(result_buf, "tai_value:%d,", info.tai_value);
@@ -249,13 +252,15 @@ process_make(sit, card)
 		for (i=1; i<=4; i++) {
 			if (table[i]) {
 				/* Record start*/
-				sprintf(result_buf,
-						"{name:\"%s\",now_money:%ld,change_money:%ld}",
-						player[table[i]].name, player[table[i]].money,
-						change_money[i]);
-				strcat(result_record_buf, result_buf);
-				if (i != 4) {
-					strcat(result_record_buf, ",");
+				if( sendlog == 1){
+					sprintf(result_buf,
+							"{name:\"%s\",now_money:%ld,change_money:%ld}",
+							player[table[i]].name, player[table[i]].money,
+							change_money[i]);
+					strcat(result_record_buf, result_buf);
+					if (i != 4) {
+						strcat(result_record_buf, ",");
+					}
 				}
 				/* Record end */
 
@@ -266,15 +271,18 @@ process_make(sit, card)
 		}
 
 		/* record start */
-		long current_time = 0;
-		time(&current_time);
-		sprintf(result_buf, "],time:%ld}", current_time);
-		strcat(result_record_buf, result_buf);
-		
-		sprintf(result_buf, ",length:%d", strlen(result_record_buf));
-		strcat(result_record_buf, result_buf);
-		
-		write_msg(gps_sockfd, result_record_buf);
+		if( sendlog == 1){
+			long current_time = 0;
+			time(&current_time);
+			sprintf(result_buf, "],time:%ld}", current_time);
+			strcat(result_record_buf, result_buf);
+			
+			sprintf(result_buf, ",length:%d", strlen(result_record_buf));
+			strcat(result_record_buf, result_buf);
+			result_record_buf[strlen(result_record_buf)+1] = \0;
+			write_msg(gps_sockfd, result_record_buf);
+			
+		}
 		/* record end */
 	}
 
