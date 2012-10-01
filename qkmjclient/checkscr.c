@@ -77,7 +77,7 @@ char card;
   /* record start */
   if(in_serv)
   {  
-	  sprintf(result_record_buf,"l022{card_owner:\"%s\",winer:\"%s\",[",player[table[card_owner]].name,player[table[sit]].name);//Record
+	  sprintf(result_record_buf,"022{card_owner:\"%s\",winer:\"%s\",[",player[table[card_owner]].name,player[table[sit]].name);//Record
 	  result_buf[0]=0;
 	  for(sitInd = 1; i <= 4;++sitInd){
 		  sprintf(result_buf,"%d",sitInd);
