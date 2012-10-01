@@ -83,7 +83,8 @@ int read_msg(int fd, char *msg) {
 	int n;
 	char msg_buf[255];
 	int read_code;
-
+	int log = 0 ;
+	
 	n = 0;
 	if (Check_for_data(fd) == 0) {
 		err("WRONG READ\n");
@@ -94,6 +95,10 @@ int read_msg(int fd, char *msg) {
 	do {
 		recheck: ;
 		read_code = read(fd, msg, 1);
+		if( n == 0 && msg == 'l' ){
+			log = 1;
+			*msg--;
+		}
 		if (read_code == -1) {
 			if (errno != EWOULDBLOCK) {
 				alarm(0);
@@ -110,9 +115,16 @@ int read_msg(int fd, char *msg) {
 		} else {
 			n++;
 		}
-		if (n > 79) {
-			alarm(0);
-			return 0;
+		if ( log == 1){
+			if( n > 2000 ){
+				alarm(0);
+				return 0;
+			}
+		}else {
+			if (n > 79) {
+				alarm(0);
+				return 0;
+			}
 		}
 	} while (*msg++ != '\0');
 	alarm(0);
