@@ -271,7 +271,7 @@ process_make(sit, card)
 		sprintf(result_buf, "],time:%ld}", current_time);
 		strcat(result_record_buf, result_buf);
 		
-		sprintf(result_buf, ",length:%d%s", strlen(result_record_buf));
+		sprintf(result_buf, ",length:%d", strlen(result_record_buf));
 		strcat(result_record_buf, result_buf);
 		
 		write_msg(gps_sockfd, result_record_buf);
