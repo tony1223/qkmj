@@ -47,7 +47,7 @@ process_make(sit, card)
 	char result_buf[40];
 	long change_money[5];
 
-	int sendlog = 0;
+	int sendlog = 1;
 	
 	play_mode=WAIT_CARD;
 	for (i=0; i<=4; i++)
