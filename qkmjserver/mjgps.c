@@ -67,7 +67,7 @@ int err(char *errmsg) {
 	 fclose (log_fp);
 }
 
-int game_log(char *gamemsg) { //TODO implements this
+int game_log(char *gamemsg) { 
 	 if ((log_fp = fopen (GAME_FILE, "a")) == NULL)
 	 {
 		 printf ("Cannot open GAME_FILE\n");
@@ -490,7 +490,7 @@ char * lookup(struct sockaddr_in *cli_addrp) {
 init_variable() {
 	int i;
 
-	login_limit = 100;
+	login_limit = LOGIN_LIMIT;
 	for (i = 0; i < MAX_PLAYER; i++) {
 		player[i].login = 0;
 		player[i].serv = 0;
@@ -823,6 +823,7 @@ void gps_processing() {
 					 */
 					read_code = read_msg(player[player_id].sockfd, buf);
 					if (!read_code) {
+						err(("cant read code!"));
 						close_id(player_id);
 					} else if (read_code == 1) {
 						msg_id = convert_msg_id(player_id, buf);
@@ -1100,7 +1101,7 @@ void gps_processing() {
 							 * player[player_id].serv++;
 							 */
 							break;
-						case 200:
+						case 200://使用者離開遊戲(/LEAVE)
 							close_id(player_id);
 							break;
 						case 202:

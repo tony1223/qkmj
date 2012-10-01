@@ -270,12 +270,11 @@ process_make(sit, card)
 		time(&current_time);
 		sprintf(result_buf, "],time:%ld}", current_time);
 		strcat(result_record_buf, result_buf);
-		write_msg(gps_sockfd, result_record_buf);
+		//write_msg(gps_sockfd, result_record_buf);
 		/* record end */
 	}
 
 	//Send result record to server side
-
 
 	wait_a_key(PRESS_ANY_KEY_TO_CONTINUE);
 	set_color(37, 40);
