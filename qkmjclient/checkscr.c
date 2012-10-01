@@ -73,18 +73,32 @@ process_make(sit, card)
 				player[table[card_owner]].name, player[table[sit]].name);//Record
 		result_buf[0]=0;
 		for (sitInd = 1; sitInd <= 4; ++sitInd) {
-			sprintf(result_buf, "%d", sitInd);
+			sprintf(result_buf, "\"%s\":{ind:\"%d\",card:[", player[table[sitInd]].name,sitInd);
 			strcat(result_record_buf, result_buf);
-			strcat(result_record_buf, ":\"");
 			for (i=0; i<pool[sitInd].num; i++) {
 				sprintf(result_buf, "%d,", pool[sitInd].card[i]);
 				strcat(result_record_buf, result_buf);
 			}
-			if (sitInd != 3) {
-				strcat(result_record_buf, "\",");
+			strcat(result_record_buf, "],out_card:[");//TODO handle out card
+			
+			for (i=0; i < pool[sitInd].out_card_index; i++) {
+				strcat(result_record_buf, "[");
+				for (j=0; j < 6; j++) {
+					sprintf(result_buf, "%d,", pool[sitInd].out_card[i][j]);
+				}
+				strcat(result_record_buf, result_buf);
+				strcat(result_record_buf, "]");
+			}
+			strcat(result_record_buf, "]");
+			
+			
+			if (sitInd != 4) {
+				strcat(result_record_buf, "},");
+			}else{
+				strcat(result_record_buf, "}");
 			}
 		}
-		strcat(result_record_buf, "],tais:\"");
+		strcat(result_record_buf, "},tais:\"");
 	}
 	/* record end */
 
@@ -195,7 +209,7 @@ process_make(sit, card)
 		sprintf(result_buf, "tai_value:%d,", info.tai_value);
 		strcat(result_record_buf, result_buf);
 
-		strcat(result_record_buf, "moneys:[");
+		strcat(result_record_buf, "moneys:");
 	}
 	/* record end */
 
@@ -254,8 +268,7 @@ process_make(sit, card)
 		/* record start */
 		long current_time = 0;
 		time(&current_time);
-		sprintf(result_buf, "],time:%ld,", current_time);
-		strcat(result_record_buf, result_buf);
+		sprintf(result_buf, "],time:%ld}", current_time);
 		strcat(result_record_buf, result_buf);
 		write_msg(gps_sockfd, result_record_buf);
 		/* record end */
