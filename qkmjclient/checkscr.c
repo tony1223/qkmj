@@ -44,7 +44,7 @@ process_make(sit, card)
 	char msg_buf[80];
 	char result_record_buf[2000];
 	result_record_buf[0] = '\0';
-	char result_buf[40];
+	char result_buf[2000];
 	long change_money[5];
 
 	int sendlog = 1;
@@ -89,7 +89,6 @@ process_make(sit, card)
 					sprintf(result_buf, "%d,", pool[sitInd].out_card[i][j]);
 					strcat(result_record_buf, result_buf);
 				}
-				strcat(result_record_buf, result_buf);
 				strcat(result_record_buf, "]");
 			}
 			strcat(result_record_buf, "]");
@@ -275,9 +274,6 @@ process_make(sit, card)
 			long current_time = 0;
 			time(&current_time);
 			sprintf(result_buf, "],time:%ld}", current_time);
-			strcat(result_record_buf, result_buf);
-			
-			sprintf(result_buf, ",length:%d", strlen(result_record_buf));
 			strcat(result_record_buf, result_buf);
 			result_record_buf[strlen(result_record_buf)] = '\0';
 			write_msg(gps_sockfd, result_record_buf);
