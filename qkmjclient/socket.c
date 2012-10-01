@@ -222,7 +222,7 @@ write_msg(int fd,char *msg)
 }
 
 /* Command for server */
-broadcast_msg(int id,chat *msg)
+broadcast_msg(int id,char *msg)
 {
   int i;
   for(i=2;i<MAX_PLAYER;i++){
