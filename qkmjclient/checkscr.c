@@ -77,9 +77,9 @@ char card;
   /* record start */
   if(in_serv)
   {  
-	  sprintf(result_record_buf,"022{card_owner:\"%s\",winer:\"%s\",[",player[table[card_owner]].name,player[table[sit]].name);//Record
+	  sprintf(result_record_buf,"022{card_owner:\"%s\",winer:\"%s\",cards:{",player[table[card_owner]].name,player[table[sit]].name);//Record
 	  result_buf[0]=0;
-	  for(sitInd = 1; i <= 4;++sitInd){
+	  for(sitInd = 1; sitInd <= 4;++sitInd){
 		  sprintf(result_buf,"%d",sitInd);
 		  strcat(result_record_buf,result_buf);
 		  strcat(result_record_buf,":\"");
@@ -87,7 +87,9 @@ char card;
 		    sprintf(result_buf,"%d,",pool[sitInd].card[i]);
 		    strcat(result_record_buf,result_buf);
 		  }
-		  strcat(result_record_buf,"\",");
+		  if(sitInd != 3){
+			  strcat(result_record_buf,"\",");
+		  }
 	  }
 	  strcat(result_record_buf,"],tais:\"");
   }
@@ -164,7 +166,7 @@ char card;
 	  /* record */
 	  if(in_serv)
 	  {  
-		sprintf(result_buf,"is_dealer:1,");
+		sprintf(result_buf,"is_dealer:1,dealer:\"%s\",",player[table[info.dealer]].name);
 		strcat(result_record_buf,result_buf);
 	  }
 	  /* record */  
@@ -248,9 +250,9 @@ char card;
   /* Send money info to GPS */
   if(in_serv)
   {
+	strcat(result_record_buf,"["); //record
     for(i=1;i<=4;i++)
     {
-      strcat(result_record_buf,"["); //record   	
       if(table[i]) 
       {
     	/* Record start*/
@@ -269,9 +271,16 @@ char card;
                 player[table[i]].money+change_money[i]);
         write_msg(gps_sockfd,msg_buf);
       }
-      strcat(result_record_buf,"]"); //record
     }
-    write_msg(gps_sockfd,result_record_buf);  
+
+    /* record start */
+    long current_time = 0;
+    time(&current_time);
+    sprintf(result_buf,"],time:%ld,",current_time);
+    		strcat(result_record_buf,result_buf);
+    strcat(result_record_buf,result_buf);
+    write_msg(gps_sockfd,result_record_buf);
+    /* record end */
   }
   
   //Send result record to server side
