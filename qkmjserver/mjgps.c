@@ -1091,9 +1091,9 @@ void gps_processing() {
 							find_user(player[player_id].sockfd, buf + 3);
 							break;
 						case 22: //Game record
-							err("get game record");
+							err("get game record\n");
 							game_log(buf + 3);
-							err("get game record end");
+							err("get game record end\n");
 							break;
 						case 111:
 							/*
