@@ -98,7 +98,7 @@ int read_msg(int fd, char *msg) {
 		if (read_code == -1) {
 			if (errno != EWOULDBLOCK) {
 				sprintf(msg_buf,"fail in read_msg,errno = %d",errno);
-				err(msg_buf)
+				err(msg_buf);
 				alarm(0);
 				return 0;
 			} else if (timeup) {
