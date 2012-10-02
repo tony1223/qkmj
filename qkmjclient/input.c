@@ -4,18 +4,19 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#ifdef NON_WINDOWS //Linux
-#include "curses.h"
-#else //Cygwin
-#include  "ncurses/ncurses.h"
-#endif
-
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
 #include <sys/time.h>
 
 #include "mjdef.h"
+
+#ifdef NON_WINDOWS //Linux
+#include "curses.h"
+#else //Cygwin
+#include  "ncurses/ncurses.h"
+#endif
+
 #include "qkmj.h"
 #include "misc.h"
 

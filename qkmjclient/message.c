@@ -4,6 +4,12 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+#include <sys/time.h>
+
+#include "mjdef.h"
 
 #ifdef  NON_WINDOWS //Linux
 #include "curses.h"
@@ -11,12 +17,6 @@
 #include  "ncurses/ncurses.h"
 #endif
 
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <sys/time.h>
-
-#include "mjdef.h"
 #include "qkmj.h"
 #include "misc.h"
    

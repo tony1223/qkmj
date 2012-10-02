@@ -3,12 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef NON_WINDOWS //Linux
-#include "curses.h"
-#else //Cygwin
-#include  "ncurses/ncurses.h"
-#endif
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -17,6 +11,13 @@
 #define STRAIGHT_CARD 2
 #define PAIR_CARD 3
 #include "mjdef.h"
+
+#ifdef NON_WINDOWS //Linux
+#include "curses.h"
+#else //Cygwin
+#include  "ncurses/ncurses.h"
+#endif
+
 #include "qkmj.h"
 
 /*******************  Denifition of variables  **********************/
