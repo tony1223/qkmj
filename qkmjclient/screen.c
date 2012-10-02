@@ -347,7 +347,7 @@ char type;
 /* Show cards on the screen. */
 /* type   0: row             */
 /* type   1: column          */
-show_card(char card,int x,int y,int type)
+void show_card(char card,int x,int y,int type)
 {
   char card1[3];
   char card2[3];
