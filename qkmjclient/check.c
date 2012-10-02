@@ -2,7 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef SIGIOT //Linux
+#include "curses.h"
+#else //Cygwin
 #include  "ncurses/ncurses.h"
+#endif
+
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
