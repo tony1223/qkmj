@@ -7,7 +7,8 @@ OPTS=
 
 
 qkmj: qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o 
-	$(CC) -g qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o -o qkmj -lncurses -ltermcap -lm $(OPTS)
+	$(CC) -g qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o -o qkmj -lncurses  -lm $(OPTS)
+#-ltermcap 
 
 
 qkmj.o: qkmj.c input.h socket.h mjdef.h

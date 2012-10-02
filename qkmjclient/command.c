@@ -89,9 +89,7 @@ char *strinput;
   }
 }
 
-strupr(upper,org)
-char *upper;
-char *org;
+my_strupr(char* upper,char* org)
 {
   int i,len;
   len=strlen(org);
@@ -106,7 +104,7 @@ char *cmd;
   char cmd_upper[255];
   int i;
 
-  strupr(cmd_upper,cmd);
+  my_strupr(cmd_upper,cmd);
   i=1;
   while(commands[i][0]!='\0')
   {
@@ -406,7 +404,7 @@ show_allcard(cmd_argv[2][0]-'0');
         }
         else
         {
-          strupr(ans_buf,cmd_argv[2]);
+          my_strupr(ans_buf,cmd_argv[2]);
           if(strcmp(ans_buf,"ON")==0)
           {
             set_beep=1;

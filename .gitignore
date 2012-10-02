@@ -1,5 +1,5 @@
 **/*.o
-
+**/*.exe
 qkmjclient/qkmj
 qkmjserver/mjgps
 qkmjserver/mjrec

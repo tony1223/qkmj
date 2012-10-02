@@ -4,7 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "curses.h"
+#include  "ncurses/ncurses.h"
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
@@ -782,9 +782,9 @@ wrefresh(news_win);
 display_comment(char *comment)
 {
   waddstr(commentwin,"\n");
-  set_color(31,40);
+  wattrset(commentwin,COLOR_PAIR(1));
+  wattron(commentwin,COLOR_PAIR(1));
   printstr(commentwin,comment);
-  set_color(37,40);
   wrefresh(commentwin);
   return_cursor();
 }

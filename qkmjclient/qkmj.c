@@ -3,7 +3,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include  "curses.h"
+//#include  "curses.h"
+#include  "ncurses/ncurses.h"
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
@@ -910,7 +911,7 @@ read_qkmjrc()
     while(fgets(msg_buf,80,qkmjrc_fp)!=NULL)
     {
       Tokenize(msg_buf);
-      strupr(event,cmd_argv[1]);
+      my_strupr(event,cmd_argv[1]);
       if(strcmp(event,"LOGIN")==0)
       {
         if(narg>1)
@@ -951,7 +952,7 @@ read_qkmjrc()
       {
         if(narg>1)
         {
-          if(strcmp(strupr(msg_buf1,cmd_argv[2]),"OFF")==0)
+          if(strcmp(my_strupr(msg_buf1,cmd_argv[2]),"OFF")==0)
           {
             set_beep=0;
           }
@@ -968,7 +969,12 @@ int	argc;
 char	*argv[];
 {
   setenv("TERM", "vt100", 1);
+  
+  /* init curses */
   initscr();
+  start_color();
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  /* init curses end */
   cbreak();
   noecho();
   nonl();
@@ -976,9 +982,11 @@ char	*argv[];
   attrset(A_NORMAL);
   */
   clear();
+#ifdef SIGIOT
   signal(SIGINT,leave);
   signal(SIGIOT,leave);
   signal(SIGPIPE,leave);
+#endif
   init_variable();
   strcpy(GPS_IP,DEFAULT_GPS_IP);
   GPS_PORT=DEFAULT_GPS_PORT;
