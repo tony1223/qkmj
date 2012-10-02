@@ -13,9 +13,7 @@
 #include "mjdef.h"
 #include "qkmj.h"
   
-set_color(fore,back)
-int fore;
-int back;
+set_color(int fore,int back)
 {
   char msg_buf[80];
   wrefresh(stdscr);
@@ -349,11 +347,7 @@ char type;
 /* Show cards on the screen. */
 /* type   0: row             */
 /* type   1: column          */
-show_card(card,x,y,type)
-  char card;
-  int x;
-  int y;
-  int type;
+show_card(char card,int x,int y,int type)
 {
   char card1[3];
   char card2[3];
@@ -785,11 +779,12 @@ wrefresh(news_win);
   redraw_screen();
 }
 
-display_comment(comment)
-char *comment;
+display_comment(char *comment)
 {
+  char buf = char[2000];
+  sprintf(buf,"[%d;%dm%s[m",31,30,comment);
   waddstr(commentwin,"\n"); 
-  printstr(commentwin,comment);
+  printstr(commentwin,buf);
   wrefresh(commentwin);
   return_cursor();
 }

@@ -975,7 +975,7 @@ void gps_processing() {
 						case 6:
 							who(player[player_id].sockfd, buf + 3);
 							break;
-						case 7:
+						case 7://¼s¼½¡AGM ¥\¯à¡C
 							broadcast(player_id, buf + 3);
 							break;
 						case 8:
