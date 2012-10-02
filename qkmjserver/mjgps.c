@@ -727,6 +727,12 @@ void show_current_state(int player_id) {
 	write_msg(player[player_id].sockfd, msg_buf);
 }
 
+void update_client_money(int player_id){
+	char msg_buf[255];
+	sprintf(msg_buf, "120%5d%ld", player[player_id].id, player[player_id].money);
+	write_msg(player[player_id].sockfd, msg_buf);
+}
+
 
 int find_user_name(char *name) {
 	int i;
@@ -986,7 +992,8 @@ void gps_processing() {
 								sprintf(msg_buf,"101查無此人");
 								write_msg(player[player_id].sockfd,msg_buf);
 								break;
-							}							
+							}						
+							update_client_money(player_id);
 							if (player[player_id].money <= MIN_JOIN_MONEY ){
 								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能加入牌桌",
 										player[player_id].money , MIN_JOIN_MONEY);
@@ -1035,6 +1042,7 @@ void gps_processing() {
 								write_msg(player[player_id].sockfd,msg_buf);
 								break;
 							}
+							update_client_money(player_id);
 							if (player[player_id].money <= MIN_JOIN_MONEY ){
 								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能開桌",
 										player[player_id].money , MIN_JOIN_MONEY);
@@ -1065,6 +1073,7 @@ void gps_processing() {
 								write_msg(player[player_id].sockfd,msg_buf);
 								break;
 							}							
+							update_client_money(player_id);
 							if (player[player_id].money <= MIN_JOIN_MONEY ){
 								sprintf(msg_buf,"101您的賭幣（%d）不足，必須超過 %d 元才能開桌",
 										player[player_id].money , MIN_JOIN_MONEY);
