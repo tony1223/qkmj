@@ -781,7 +781,7 @@ wrefresh(news_win);
 
 display_comment(char *comment)
 {
-  char buf = char[2000];
+  char buf[2000];
   sprintf(buf,"[%d;%dm%s[m",31,30,comment);
   waddstr(commentwin,"\n"); 
   printstr(commentwin,buf);
