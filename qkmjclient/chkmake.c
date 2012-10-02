@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef SIGIOT //Linux
+#ifdef NON_WINDOWS //Linux
 #include "curses.h"
 #else //Cygwin
 #include  "ncurses/ncurses.h"

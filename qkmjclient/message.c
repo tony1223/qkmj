@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#ifdef SIGIOT //Linux
+#ifdef  NON_WINDOWS //Linux
 #include "curses.h"
 #else //Cygwin
 #include  "ncurses/ncurses.h"
