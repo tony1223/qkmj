@@ -2,18 +2,19 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef NON_WINDOWS //Linux
-#include "curses.h"
-#else //Cygwin
-#include  "ncurses/ncurses.h"
-#endif
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
 #include "mjdef.h"
+
+#ifdef NON_WINDOWS //Linux
+#include "curses.h"
+#else //Cygwin
+#include  "ncurses/ncurses.h"
+#endif
+
 #include "qkmj.h"
 
 init_check_mode() {
