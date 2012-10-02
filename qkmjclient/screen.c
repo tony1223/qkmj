@@ -781,10 +781,10 @@ wrefresh(news_win);
 
 display_comment(char *comment)
 {
-  char buf[2000];
-  sprintf(buf,"[%d;%dm%s[m",31,30,comment);
-  waddstr(commentwin,"\n"); 
-  printstr(commentwin,buf);
+  waddstr(commentwin,"\n");
+  set_color(31,40);
+  printstr(commentwin,comment);
+  set_color(37,40);
   wrefresh(commentwin);
   return_cursor();
 }
