@@ -34,6 +34,8 @@ int gps_port;
 int log_level;
 char number_map[20][5] = { "０", "１", "２", "３", "４", "５", "６", "７", "８", "９" };
 
+#define ADMIN_USER  "tonyq"
+
 #define MIN_JOIN_MONEY 0  //use -999999 if you allow user to join for debt
 
 int gps_sockfd;
@@ -406,13 +408,14 @@ broadcast(player_id, msg)
 	int i;
 	char msg_buf[255];
 
-	if (strcmp(player[player_id].name, "candle") != 0)
+	if (strcmp(player[player_id].name, ADMIN_USER) != 0)
 		return;
-	for (i = 1; i < MAX_PLAYER; i++)
+	for (i = 1; i < MAX_PLAYER; i++){
 		if (player[i].login == 2) {
 			sprintf(msg_buf, "101%s", msg);
 			write_msg(player[i].sockfd, msg_buf);
 		}
+	}
 }
 
 send_msg(player_id, msg)
@@ -1116,7 +1119,7 @@ void gps_processing() {
 							close_id(player_id);
 							break;
 						case 202:
-							if (strcmp(player[player_id].name, "candle") != 0)
+							if (strcmp(player[player_id].name, ADMIN_USER) != 0)
 								break;
 							id = find_user_name(buf + 3);
 							if (id >= 0) {
@@ -1144,7 +1147,7 @@ void gps_processing() {
 						case 201: //顯示目前狀態
 							show_current_state(player_id);
 						case 500:
-							if (strcmp(player[player_id].name, "candle") == 0)
+							if (strcmp(player[player_id].name, ADMIN_USER) == 0)
 								shutdown_server();
 							break;
 						default:
