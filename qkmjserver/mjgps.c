@@ -332,7 +332,6 @@ who(int fd, char *name){
 			}
 			strcat(msg_buf, player[i].name);
 			strcat(msg_buf, "   ");
-			strcat(msg_buf, player[i].money);
 		}
 	}
 	if (strlen(msg_buf) > 4){
