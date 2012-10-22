@@ -794,8 +794,7 @@ display_comment(char *comment)
   return_cursor();
 }
 
-send_talk_line(talk)
-char *talk;
+send_talk_line(char *talk)  //User Talks
 {
   char comment[255];
   char msg_buf[255];

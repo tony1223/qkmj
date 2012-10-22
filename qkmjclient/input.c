@@ -463,7 +463,7 @@ process_key()
           return_cursor();
           break;
         case KEY_ENTER:
-        case ENTER:
+        case ENTER: //TALK TO Others
           switch(input_mode)
           {
             case TALK_MODE:

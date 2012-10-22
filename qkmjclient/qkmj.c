@@ -131,7 +131,7 @@ int eat_x,eat_y;
 int card_count=0;
 int card_point;
 int card_index;
-int gps_sockfd,serv_sockfd,table_sockfd;
+int gps_sockfd,serv_sockfd = -1,table_sockfd = -1;
 int in_serv,in_join;
 char talk_buf[255]="\0";
 int talk_buf_count=0;
@@ -711,22 +711,25 @@ gps()
   int i;
   int key;
   int msg_id;
+  int userfd ;
   char msg_buf[255];
   char buf[128];
   char ans_buf[255];
+  
+
 
   init_global_screen();
   input_mode=0;
-  //sprintf(msg_buf,"連往 QKMJ Server %s %d",GPS_IP,GPS_PORT);
-  sprintf(msg_buf,"連往 QKMJ Server 中 ");
-  display_comment(msg_buf);
+  sprintf(msg_buf,"連往 QKMJ Server %s %d",GPS_IP,GPS_PORT);
+  //sprintf(msg_buf,"連往 QKMJ Server 中 ");
+  display_comment(msg_buf); 
   status=init_socket(GPS_IP,GPS_PORT,&gps_sockfd);
   if(status<0)
   {
     err("無法連往 QKMJ Server");
     endwin();
     exit(0);
-  }
+  } 
   //send_gps_line("已連上");
   sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s 特別板 ",QKMJ_VERSION[0],QKMJ_VERSION+1);
   display_comment(msg_buf);
@@ -754,16 +757,29 @@ gps()
   write_msg(gps_sockfd,msg_buf);
   strcpy(my_name,ans_buf);
   nfds=getdtablesize();
+  
   FD_ZERO(&afds);
   FD_SET(gps_sockfd,&afds);
   FD_SET(0,&afds);
+  nfds = gps_sockfd + 1; 
+	  
   for(;;)
   {
-    bcopy((char *) &afds,(char *) &rfds,sizeof(rfds));
-    if(select(nfds,&rfds,(fd_set *)0, (fd_set *)0, 0)<0)
+	bcopy((char *) &afds,(char *) &rfds,sizeof(rfds));
+    
+    if( table_sockfd >= nfds) {
+    	nfds = table_sockfd +1 ; 
+    }
+    if(serv_sockfd >= nfds){
+    	nfds = serv_sockfd +1 ;
+    }
+    
+    if(select(nfds ,&rfds,(fd_set *)0, (fd_set *)0, 0)<0)
     {
-      if(errno!=EINTR)
+      if(errno!=EINTR){
         display_comment("Select Error!");
+        exit(0);
+      }
       continue;
     }
     if(FD_ISSET(0,&rfds))
@@ -997,7 +1013,7 @@ char	*argv[];
   strcpy(GPS_IP,DEFAULT_GPS_IP);
   GPS_PORT=DEFAULT_GPS_PORT;
   read_qkmjrc();
-  /*if(argc>=3)
+  if(argc>=3)
   {
     strcpy(GPS_IP,argv[1]);
     GPS_PORT=atoi(argv[2]);
@@ -1006,7 +1022,7 @@ char	*argv[];
   {
     strcpy(GPS_IP,argv[1]);
     GPS_PORT=DEFAULT_GPS_PORT;
-  }*/
+  }
   gps();
   exit(0); 
 }

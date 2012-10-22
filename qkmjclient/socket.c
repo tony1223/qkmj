@@ -80,10 +80,7 @@ get_my_info()
   strcpy(my_username,userdata->pw_name);
 }
 
-init_socket(host,portnum,sockfd)
-char *host;
-int portnum;
-int *sockfd;
+init_socket(char *host,int portnum,int *sockfd)
 {
   struct sockaddr_in serv_addr;
 

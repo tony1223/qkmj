@@ -157,7 +157,7 @@ int msg_type;
           case 10:  /* 離線 */
             leave();
             break;
-          case 11:
+          case 11: //JOIN Sever
             switch(buf[3])
             {
               case '0':
@@ -165,7 +165,9 @@ int msg_type;
                 //sprintf(msg_buf,"連往 %s port %s",cmd_argv[1],cmd_argv[2]);
                 //send_gps_line(msg_buf);
                 send_gps_line("與該桌連線中...");
-                init_socket(cmd_argv[1],atoi(cmd_argv[2]),&table_sockfd);
+                               
+                int ret = init_socket(cmd_argv[1],atoi(cmd_argv[2]),&table_sockfd);
+
                 FD_SET(table_sockfd,&afds);
                 in_join=1;
                 break;

@@ -185,8 +185,7 @@ help()
   send_gps_line("--------------------------------------------------");
 }
 
-command_parser(msg)
-char *msg;
+command_parser(char *msg)
 {
   int i;
   int cmd_id;
