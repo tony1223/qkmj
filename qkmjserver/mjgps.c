@@ -322,6 +322,7 @@ who(fd, name)
 	return;
 	found_serv: ;
 	sprintf(msg_buf, "101%s  ", player[serv_id].name);
+	return ;//TODO fixed me
 	write_msg(fd, "101----------------   此桌使用者   ------------------");
 	for (i = 1; i < MAX_PLAYER; i++)
 		if (player[i].join == serv_id) {
@@ -1208,10 +1209,26 @@ void shutdown_server() {
 	exit(0);
 }
 
-void core_dump() {
-	err("CORE DUMP!\n");
-	exit(0);
+void core_dump(int signo) {
+        char buf[1024];
+        char cmd[1024];
+        FILE *fh;
+
+        snprintf(buf, sizeof(buf), "/proc/%d/cmdline", getpid());
+        if(!(fh = fopen(buf, "r")))
+                exit(0);
+        if(!fgets(buf, sizeof(buf), fh))
+                exit(0);
+        fclose(fh);
+        if(buf[strlen(buf) - 1] == '\n')
+                buf[strlen(buf) - 1] = '\0';
+        snprintf(cmd, sizeof(cmd), "gdb %s %d", buf, getpid());
+        system(cmd);
+
+        err("CORE DUMP!\n");
+        exit(0);
 }
+
 
 void bus_err() {
 	err("BUS ERROR!\n");
@@ -1275,7 +1292,7 @@ void main(int argc, char **argv) {
 	setrlimit(RLIMIT_NOFILE, &fd_limit);
 	i = getdtablesize();
 	printf("FD_SIZE=%d\n", i);
-	signal(SIGSEGV, core_dump);
+	signal(SIGSEGV, &core_dump);
 	signal(SIGBUS, bus_err);
 	signal(SIGPIPE, broken_pipe);
 	signal(SIGALRM, time_out);

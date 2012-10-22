@@ -16,7 +16,7 @@
 #define GAME_FILE "/var/qkrecord/qkmj_game.log"
 
 #define DEFAULT_RECORD_FILE "/var/qkrecord/qkmj.rec"
-#define DEFAULT_MONEY 0
+#define DEFAULT_MONEY 40000
 
 
 struct player_record
