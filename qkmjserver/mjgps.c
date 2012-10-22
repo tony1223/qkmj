@@ -324,7 +324,7 @@ who(int fd, char *name){
 	found_serv: ;
 	sprintf(msg_buf, "101%s  ", player[serv_id].name);
 	write_msg(fd, "101----------------   此桌使用者   ------------------");
-	for (i = 1; i < MAX_PLAYER; i++)
+	for (i = 1; i < MAX_PLAYER; i++){
 		if (player[i].join == serv_id) {
 			if ((strlen(msg_buf) + strlen(player[i].name)) > 53) {
 				write_msg(fd, msg_buf);
@@ -334,6 +334,7 @@ who(int fd, char *name){
 			strcat(msg_buf, "   ");
 			strcat(msg_buf, player[i].money);
 		}
+	}
 	if (strlen(msg_buf) > 4){
 		write_msg(fd, msg_buf);
 	}
@@ -501,6 +502,7 @@ init_variable() {
 	for (i = 0; i < MAX_PLAYER; i++) {
 		player[i].login = 0;
 		player[i].serv = 0;
+		player[i].money = 0;
 		player[i].join = 0;
 		player[i].type = 16;
 		player[i].note[0] = 0;
