@@ -761,7 +761,7 @@ gps()
   FD_ZERO(&afds);
   FD_SET(gps_sockfd,&afds);
   FD_SET(0,&afds);
-  nfds = gps_sockfd + 1; 
+ // nfds = gps_sockfd + 1; 
 	  
   for(;;)
   {
