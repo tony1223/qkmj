@@ -83,7 +83,7 @@ int game_log(char *gamemsg) {
 
 int read_msg(int fd, char *msg) {
 	int n;
-	char msg_buf[255];
+	char msg_buf[1000];
 	int read_code;
 	int log = 0 ;
 	
@@ -153,7 +153,7 @@ void write_msg(int fd, char *msg) {
 }
 
 void display_msg(int player_id, char *msg) {
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	sprintf(msg_buf, "101%s", msg);
 	write_msg(player[player_id].sockfd, msg_buf);
@@ -191,7 +191,7 @@ int Check_for_data(int fd)
 
 int convert_msg_id(int player_id, char *msg) {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if (strlen(msg) < 3) {
 		sprintf(msg_buf, "Error msg: %s", msg);
@@ -208,7 +208,7 @@ int convert_msg_id(int player_id, char *msg) {
 
 void list_player(int fd) {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 	int total_num = 0;
 
 	write_msg(fd, "101-------------    目前上線使用者    ---------------");
@@ -234,7 +234,7 @@ void list_player(int fd) {
 
 void list_table(int fd, int mode) {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 	int total_num = 0;
 
 	write_msg(fd, "101   桌長       人數  附註");
@@ -265,8 +265,8 @@ void list_table(int fd, int mode) {
 }
 
 void list_stat(int fd, char *name) {
-	char msg_buf[255];
-	char msg_buf1[255];
+	char msg_buf[1000];
+	char msg_buf1[1000];
 	char order_buf[30];
 	int i;
 	int total_num;
@@ -306,27 +306,27 @@ void list_stat(int fd, char *name) {
 	fclose(fp);
 }
 
-who(fd, name)
-	int fd;char *name; {
-	char msg_buf[255];
+who(int fd, char *name){
+	char msg_buf[1000];
 	int i;
 	int serv_id;
 
-	for (i = 1; i < MAX_PLAYER; i++)
-		if (player[i].login && player[i].serv)
+	for (i = 1; i < MAX_PLAYER; i++){
+		if (player[i].login && player[i].serv){
 			if (strcmp(player[i].name, name) == 0) {
 				serv_id = i;
 				goto found_serv;
 			}
+		}
+	}
 	write_msg(fd, "101找不到此桌");
 	return;
 	found_serv: ;
 	sprintf(msg_buf, "101%s  ", player[serv_id].name);
-	return ;//TODO fixed me
 	write_msg(fd, "101----------------   此桌使用者   ------------------");
 	for (i = 1; i < MAX_PLAYER; i++)
 		if (player[i].join == serv_id) {
-			if (strlen(msg_buf) + strlen(player[i].name) > 53) {
+			if ((strlen(msg_buf) + strlen(player[i].name)) > 53) {
 				write_msg(fd, msg_buf);
 				strcpy(msg_buf, "101");
 			}
@@ -334,15 +334,16 @@ who(fd, name)
 			strcat(msg_buf, "   ");
 			strcat(msg_buf, player[i].money);
 		}
-	if (strlen(msg_buf) > 4)
+	if (strlen(msg_buf) > 4){
 		write_msg(fd, msg_buf);
+	}
 	write_msg(fd, "101--------------------------------------------------");
 }
 
 lurker(fd)
 	int fd; {
 	int i, total_num = 0;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	strcpy(msg_buf, "101");
 	write_msg(fd, "101-------------   目前□置之使用者   ---------------");
@@ -367,7 +368,7 @@ lurker(fd)
 find_user(fd, name)
 	int fd;char *name; {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 	int id;
 	char *ctime();
 	char last_login_time[80];
@@ -407,7 +408,7 @@ find_user(fd, name)
 broadcast(player_id, msg)
 	int player_id;char *msg; {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if (strcmp(player[player_id].name, ADMIN_USER) != 0)
 		return;
@@ -423,7 +424,7 @@ send_msg(player_id, msg)
 	int player_id;char *msg; {
 	char *str1, *str2;
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	str1 = strtok(msg, " ");
 	str2 = msg + strlen(str1) + 1;
@@ -439,7 +440,7 @@ send_msg(player_id, msg)
 invite(player_id, name)
 	int player_id;char *name; {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	for (i = 1; i < MAX_PLAYER; i++)
 		if (player[i].login == 2 && strcmp(player[i].name, name) == 0) {
@@ -510,7 +511,7 @@ init_variable() {
 int read_user_name(name)
 	char *name; {
 	struct player_record tmp_rec;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if ((fp = fopen(RECORD_FILE, "a+b")) == NULL) {
 		sprintf(msg_buf, "(read_user_name) Cannot open file!\n");
@@ -530,7 +531,7 @@ int read_user_name(name)
 }
 int read_user_name_update(char *name,int player_id){
 	struct player_record tmp_rec;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if ((fp = fopen(RECORD_FILE, "a+b")) == NULL) {
 		sprintf(msg_buf, "(read_user_name) Cannot open file!\n");
@@ -555,7 +556,7 @@ int read_user_name_update(char *name,int player_id){
 
 int read_user_id(id)
 	unsigned int id; {
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if ((fp = fopen(RECORD_FILE, "a+b")) == NULL) {
 		sprintf(msg_buf, "(read_user_id) Cannot open file!\n");
@@ -596,7 +597,7 @@ int add_user(int player_id, char *name, char *passwd) {
 }
 
 int check_user(int player_id) {
-	char msg_buf[255];
+	char msg_buf[1000];
 	char from[80];
 	char email[80];
 	FILE *baduser_fp;
@@ -625,7 +626,7 @@ int check_user(int player_id) {
 }
 
 void write_record() {
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if ((fp = fopen(RECORD_FILE, "r+b")) == NULL) {
 		sprintf(msg_buf, "(write_record) Cannot open file!");
@@ -640,7 +641,7 @@ void write_record() {
 void print_news(int fd, char *name) {
 	FILE *news_fp;
 	char msg[255];
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	if ((news_fp = fopen(name, "r")) == NULL) {
 		sprintf(msg_buf, "Cannot open file %s\n", NEWS_FILE);
@@ -657,7 +658,7 @@ void print_news(int fd, char *name) {
 }
 
 void welcome_user(int player_id) {
-	char msg_buf[255];
+	char msg_buf[1000];
 	int fd;
 	int i;
 	struct player_record tmp_rec;
@@ -693,7 +694,7 @@ void welcome_user(int player_id) {
 }
 
 void show_online_users(int player_id){
-	char msg_buf[255];
+	char msg_buf[1000];
 	int fd;
 	int total_num = 0;
 	int online_num = 0;
@@ -720,7 +721,7 @@ void show_online_users(int player_id){
 	write_msg(player[player_id].sockfd, msg_buf);
 }
 void show_current_state(int player_id) {
-	char msg_buf[255];
+	char msg_buf[1000];
 	int fd;
 	int i;
 
@@ -732,7 +733,7 @@ void show_current_state(int player_id) {
 }
 
 void update_client_money(int player_id){
-	char msg_buf[255];
+	char msg_buf[1000];
 	sprintf(msg_buf, "120%5d%ld", player[player_id].id, player[player_id].money);
 	write_msg(player[player_id].sockfd, msg_buf);
 }
@@ -757,7 +758,7 @@ void gps_processing() {
 	int msg_id;
 	int read_code;
 	char tmp_buf[80];
-	char msg_buf[255];
+	char msg_buf[1000];
 	unsigned char buf[256];
 	struct timeval timeout;
 	struct hostent *hp;
@@ -1173,7 +1174,7 @@ void gps_processing() {
 }
 
 void close_id(int player_id) {
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	close_connection(player_id);
 	sprintf(msg_buf, "Connection to %s closed\n",
@@ -1198,7 +1199,7 @@ void close_connection(int player_id) {
 
 void shutdown_server() {
 	int i;
-	char msg_buf[255];
+	char msg_buf[1000];
 
 	for (i = 1; i < MAX_PLAYER; i++) {
 		if (player[i].login)
