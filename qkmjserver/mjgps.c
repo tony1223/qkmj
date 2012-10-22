@@ -800,7 +800,7 @@ void gps_processing() {
 			FD_SET(player[player_id].sockfd, &afds);
 			fcntl(player[player_id].sockfd, F_SETFL, FNDELAY);
 			player[player_id].login = 1;
-			strcpy(climark, lookup(&(player[player_id].addr)));
+			strcpy(climark, lookup(&(player.addr)));
 			sprintf(msg_buf, "Connectted with %s\n", climark);
 			err(msg_buf);
 
