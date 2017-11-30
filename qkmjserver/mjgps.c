@@ -34,7 +34,7 @@ int gps_port;
 int log_level;
 char number_map[20][5] = { "¢¯", "¢°", "¢±", "¢²", "¢³", "¢´", "¢µ", "¢¶", "¢·", "¢¸" };
 
-#define ADMIN_USER  "tonyq"
+#define ADMIN_USER  "mjgps"
 
 #define MIN_JOIN_MONEY 0  //use -999999 if you allow user to join for debt
 
