@@ -3,13 +3,14 @@
 CC=gcc
 
 # OPTS= -finput-charset=UTF-8
-OPTS=
+OPTS=-DNON_WINDOWS=1
 
 
 qkmj: qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o 
 	$(CC) -g qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o -o qkmj -lncurses  -lm $(OPTS)
 #-ltermcap 
-
+qkmj-linux: qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o 
+	$(CC) -g qkmj.o input.o screen.o socket.o command.o message.o check.o checkscr.o card.o chkmake.o misc.o -o qkmj -lncurses  -lm $(OPTS) 
 
 qkmj.o: qkmj.c input.h socket.h mjdef.h
 	$(CC) -c qkmj.c -g $(OPTS)
