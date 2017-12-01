@@ -72,6 +72,7 @@ int mode;
       case KEY_RIGHT:
         break;
       case BACKSPACE:
+      case KEY_BACKSPACE: /* ncurses */
       case CTRL_H:
         if(x>org_x)
         {

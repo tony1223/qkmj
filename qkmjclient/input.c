@@ -451,6 +451,7 @@ process_key()
           talk_x++;
         case CTRL_H:
         case BACKSPACE:
+        case KEY_BACKSPACE: /* ncurses */
           if(talk_x==0)
             break;
           talk_x--;
