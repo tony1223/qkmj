@@ -747,8 +747,8 @@ gps()
   else
   {
     /* flush input */
-    i=0;
-    while (my_getch() || i<34) { i++; }
+    sleep(1);
+    flushinp();
 
     strcpy(ans_buf,my_name);
     do
