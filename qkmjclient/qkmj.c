@@ -746,6 +746,10 @@ gps()
     strcpy(ans_buf,my_name);
   else
   {
+    /* flush input */
+    i=0;
+    while (my_getch() || i<34) { i++; }
+
     strcpy(ans_buf,my_name);
     do
     {
