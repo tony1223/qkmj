@@ -995,7 +995,7 @@ char	*argv[];
   /* init curses */
   initscr();
   start_color();
-  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(1, COLOR_CYAN, COLOR_BLACK);
   /* init curses end */
   cbreak();
   noecho();
