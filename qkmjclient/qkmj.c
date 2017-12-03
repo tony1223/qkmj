@@ -731,11 +731,11 @@ gps()
     exit(0);
   } 
   //send_gps_line("已連上");
-  sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s TonyQ 特別板 ",QKMJ_VERSION[0],QKMJ_VERSION+1);
+  sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s 特別板 ",QKMJ_VERSION[0],QKMJ_VERSION+1);
   display_comment(msg_buf);
   display_comment("原作者 sywu (吳先祐 Shian-Yow Wu) ");
   //display_comment("本版本由  TonyQ (tonylovejava@gmail.com / TonyQ@ptt.cc ) 維護 ");
-  display_comment("Forked Branch: https://github.com/gjchentw/qkmj");
+  display_comment("Forked Source: https://github.com/gjchentw/qkmj");
   //display_comment("可以用^C退出");
   get_my_info();
   sprintf(msg_buf,"100%s",QKMJ_VERSION);
