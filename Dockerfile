@@ -3,9 +3,11 @@ FROM gjchen/wsproxy
 ENV	BUILD_DEPS="make build-essential git" \
 	QKMJ_SERVER="0.0.0.0 7001" \
 	MJQPS_DAEMON_PORT=7001 \
-	WSPROXY_ADDR="0.0.0.0:23"
+	WSPROXY_ADDR="0.0.0.0:23" \
+	TERMINFO="/etc/terminfo" \
+	TERM=vt220
 
-RUN	apt-get update && apt-get dist-upgrade -y && apt-get install -y ${BUILD_DEPS} libncurses5-dev inetutils-inetd inetutils-telnetd\
+RUN	apt-get update && apt-get dist-upgrade -y && apt-get install -y ${BUILD_DEPS} libncurses5-dev inetutils-inetd inetutils-telnetd libc6-i386 \
 	&& \
 	cd /opt && git clone https://github.com/gjchentw/qkmj.git && \
 	cd /opt/qkmj/qkmjclient && make && \
