@@ -84,9 +84,17 @@ init_socket(char *host,int portnum,int *sockfd)
 {
   struct sockaddr_in serv_addr;
 
+  struct hostent *hp;
+
   bzero((char *) &serv_addr, sizeof(serv_addr));
-	serv_addr.sin_family	= AF_INET;
-  serv_addr.sin_addr.s_addr = inet_addr(host);
+  serv_addr.sin_family    = AF_INET;
+
+  if((hp = gethostbyname(host)) == NULL || hp->h_addrtype != AF_INET) { 
+    serv_addr.sin_addr.s_addr = inet_addr(host);
+  } else {
+    bcopy(hp->h_addr_list[0], &serv_addr.sin_addr, hp->h_length);
+  }
+
   serv_addr.sin_port  = htons(portnum);
 
 	/* open a TCP socket */
