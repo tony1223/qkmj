@@ -617,7 +617,7 @@ int check_user(int player_id) {
 		if (strcmp(email, msg_buf) == 0 || strcmp(player[player_id].username,
 				msg_buf) == 0) {
 			display_msg(player_id,
-					"你已被限制進入, 有問題請 mail 給 TonyQ (tonylovejava@gmail.com)");
+					"你已被限制進入");
 			fclose(baduser_fp);
 			return 0;
 		}
