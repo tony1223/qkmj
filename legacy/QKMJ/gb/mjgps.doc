@@ -1,0 +1,33 @@
+                      QKMJ server 简单使用说明
+
+编译方式:
+
+     请先在 Makefile 中找到你所只用的系统, 将参数前的注解拿掉. 
+     例如 SunOS , 将下面的设定改为
+
+     #for SunOS
+     #LINKS=-lresolv
+     ^-----将此注解拿掉, 变成    
+     #for SunOS
+     LINKS=-resolv
+     
+     如果你的系统不在上面, 那就不用做任何修改.  
+
+     改好之後打 make 就行了. 
+
+执行方式:
+
+     mjgps <port_number> &  
+     ( & 代表放到背景中执行)
+
+相关档案:
+
+     qkmj.inx : qkmj 的索引档
+     qkmj.rec : qkmj 的计录档
+     news.txt : 一开始进去时的公布事项
+   baduser.txt: 限制使用者进入之列表
+                example: 
+                    sywu@ccsun3.csie.nctu.edu.tw   <--- 限制此机器此使用者进入
+                    guest   <--- 限制所有 username 为 guest 的人进入
+   
+   

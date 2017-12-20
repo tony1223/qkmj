@@ -1,0 +1,22 @@
+==========================================================================
+  INDEX                  所有檔案列表
+  hkgps-sun              HKMJ 十三張香港麻雀之 server 執行檔 (for SunOS)
+  hkmj-sun               HKMJ 十三張香港麻雀之 client 執行檔 (for SunOS)
+  hkmj.readme            HKMJ 之使用說明
+  mjgps.tar.gz           QKMJ server 相關程式
+  CHANGES                QKMJ 之新增功能
+  gb/                    QKMJ for GB code
+  qkmj.faq               QKMJ 之完整說明文件
+  qkmj95p3-aix           QKMJ for IBM-AIX 
+  qkmj95p3-bsdi          QKMJ for BSDI
+  qkmj95p3-freebsd       QKMJ for FreeBSD 
+  qkmj95p3-hp            QKMJ for HP 
+  qkmj95p3-irix          QKMJ for IRIX
+  qkmj95p3-linux         QKMJ for Linux 
+  qkmj95p3-netbsd        QKMJ for NetBSD
+  qkmj95p3-osfv2         QKMJ for OSF/1 Ver 2.0 
+  qkmj95p3-sun           QKMJ for SunOS 
+  qkmj95p3-solaris_sun   QKMJ for Solaris Sun
+  qkmj95p3-solaris_x86   QKMJ for Solaris x86 
+  qkmj95p3-ultrix        QKMJ for ULTRIX
+==========================================================================
