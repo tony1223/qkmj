@@ -1,4 +1,4 @@
-FROM gjchen/wsproxy
+FROM ghcr.io/gjchentw/wsproxy:latest
 
 ENV	BUILD_DEPS="make build-essential git" \
 	QKMJ_SERVER="0.0.0.0 7001" \

@@ -1,0 +1,39 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 0 1 * * 0
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: "docker build . --file Dockerfile --tag ghcr.io/gjchentw/qkmj:latest"
+    - name: Login to ghcr.io
+      run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${GITHUB_ACTOR} --password-stdin
+    - name: Push to ghcr.io
+      run: "docker push ghcr.io/gjchentw/qkmj:latest"
+    - uses: actions/github-script@v3
+      with:
+        github-token: ${{secrets.CR_PAT}}
+        script: |
+          const i = await github.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Actions Need Activities',
+            body: 'cheers',
+            labels: ['actions']
+          })
+          github.issues.update({
+            issue_number: i.data.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'closed'
+          })
