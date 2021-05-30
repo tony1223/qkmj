@@ -5,7 +5,7 @@ ENV	BUILD_DEPS="make build-essential git" \
 	MJQPS_DAEMON_PORT=7001 \
 	WSPROXY_ADDR="0.0.0.0:23" \
 	TERMINFO="/lib/terminfo" \
-	TERM=vt220
+	TERM=vt102
 
 RUN	apt-get update && apt-get dist-upgrade -y && apt-get install -y ${BUILD_DEPS} libncurses5-dev inetutils-inetd inetutils-telnetd libc6-i386 \
 	&& \
