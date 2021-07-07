@@ -991,7 +991,7 @@ main(argc, argv)
 int	argc;
 char	*argv[];
 {
-  setenv("TERM", "vt102", 1);
+  setenv("TERM", "xterm", 1);
   
   /* init curses */
   initscr();
