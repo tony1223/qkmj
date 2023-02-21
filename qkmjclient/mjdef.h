@@ -33,6 +33,7 @@
 #define LEFT 503
 #define RIGHT 504
 #define BACKSPACE 127
+#define ESCAPE 27
 #define TAB 9
 #define SPACE 32
 #define ENTER 13

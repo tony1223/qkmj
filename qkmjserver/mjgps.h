@@ -2,7 +2,7 @@
 #define __MJGPS_H__
 
 #define DEFAULT_GPS_PORT 7001
-#define DEFAULT_GPS_IP "173.255.245.16"
+#define DEFAULT_GPS_IP "0.0.0.0"
 #define MAX_PLAYER 500
 #define LOGIN_LIMIT 200
 #define ASK_MODE 1

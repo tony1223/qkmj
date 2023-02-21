@@ -451,6 +451,7 @@ process_key()
           talk_x++;
         case CTRL_H:
         case BACKSPACE:
+        case KEY_BACKSPACE: /* ncurses */
           if(talk_x==0)
             break;
           talk_x--;
@@ -554,5 +555,26 @@ AGAIN:
 	}
 	l=0;
 	if(i==-1) leave();
+        /* telnet ESCAPE(\033) */
+        switch(i)
+        {
+        case ESCAPE:
+          my_getch();  /* bypass [ */
+          switch(my_getch()) 
+          {
+            case 'A':
+              i = KEY_UP;
+              break;
+            case 'B':
+              i = KEY_DOWN;
+              break;
+            case 'C':
+              i = KEY_RIGHT;
+              break;
+            case 'D':
+              i = KEY_LEFT;
+              break;
+          }
+        }
 	return i;
 }

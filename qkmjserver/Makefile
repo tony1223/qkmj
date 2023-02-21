@@ -6,10 +6,10 @@ TARGETWIN = mjgpswin mjrecwin
 CC = gcc 
 
 #Cygwin version
-CWFLAGS = -O2  -mtune=i486 -v -fomit-frame-pointer -pipe -lcrypt /bin/cygcrypt-0.dll 
+CWFLAGS = -O2  -mtune=generic -v -fomit-frame-pointer -pipe -lcrypt /bin/cygcrypt-0.dll 
 
 #Linux Version
-CFLAGS = -O2  -mtune=i486 -v -fomit-frame-pointer -pipe -lcrypt 
+CFLAGS = -O2  -mtune=generic -v -fomit-frame-pointer -pipe -lcrypt 
   
 LDFLAGS = $(CFLAGS) -s
 
@@ -19,7 +19,7 @@ LDFLAGS = $(CFLAGS) -s
 all: $(TARGET)
 
 mjgps: mjgps.h mjgps.c
-	$(CC) $(CFLAGS) -lcrypt -s -o $@ mjgps.c
+	$(CC) $(CFLAGS) -s -o $@ mjgps.c -lcrypt
 	strip $@
 
 mjrec: mjgps.h mjrec.c

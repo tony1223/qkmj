@@ -41,8 +41,8 @@ char mj_item[100][5]
 ={"＊＊","一萬","二萬","三萬","四萬","五萬","六萬","七萬","八萬","九萬",
   "摸牌","一索","二索","三索","四索","五索","六索","七索","八索","九索",
   "    ","一筒","二筒","三筒","四筒","五筒","六筒","七筒","八筒","九筒",
-  "□□","東風","南風","西風","北風","    ","    ","    ","    ","    ",
-  "□□","紅中","白板","青發","    ","    ","    ","    ","    ","    ",
+  "▉▉","東風","南風","西風","北風","    ","    ","    ","    ","    ",
+  "▇▇","紅中","白板","青發","    ","    ","    ","    ","    ","    ",
   "    ","春１","夏２","秋３","冬４","梅１","蘭２","菊３","竹４"
  };
 struct tai_type {
@@ -734,7 +734,8 @@ gps()
   sprintf(msg_buf,"歡迎來到 QKMJ 休閑麻將 Ver %c.%2s 特別板 ",QKMJ_VERSION[0],QKMJ_VERSION+1);
   display_comment(msg_buf);
   display_comment("原作者 sywu (吳先祐 Shian-Yow Wu) ");
-  display_comment("本版本由  TonyQ (tonylovejava@gmail.com / TonyQ@ptt.cc ) 維護 ");
+  //display_comment("本版本由  TonyQ (tonylovejava@gmail.com / TonyQ@ptt.cc ) 維護 ");
+  display_comment("Forked Source: https://github.com/gjchentw/qkmj");
   //display_comment("可以用^C退出");
   get_my_info();
   sprintf(msg_buf,"100%s",QKMJ_VERSION);
@@ -990,12 +991,12 @@ main(argc, argv)
 int	argc;
 char	*argv[];
 {
-  setenv("TERM", "vt100", 1);
+  setenv("TERM", "xterm", 1);
   
   /* init curses */
   initscr();
   start_color();
-  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(1, COLOR_WHITE, COLOR_BLACK);
   /* init curses end */
   cbreak();
   noecho();

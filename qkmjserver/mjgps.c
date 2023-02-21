@@ -34,7 +34,7 @@ int gps_port;
 int log_level;
 char number_map[20][5] = { "０", "１", "２", "３", "４", "５", "６", "７", "８", "９" };
 
-#define ADMIN_USER  "tonyq"
+#define ADMIN_USER  "mjgps"
 
 #define MIN_JOIN_MONEY 0  //use -999999 if you allow user to join for debt
 
@@ -617,7 +617,7 @@ int check_user(int player_id) {
 		if (strcmp(email, msg_buf) == 0 || strcmp(player[player_id].username,
 				msg_buf) == 0) {
 			display_msg(player_id,
-					"你已被限制進入, 有問題請 mail 給 TonyQ (tonylovejava@gmail.com)");
+					"你已被限制進入");
 			fclose(baduser_fp);
 			return 0;
 		}
